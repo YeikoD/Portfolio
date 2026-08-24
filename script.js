@@ -105,7 +105,9 @@ const observer = new IntersectionObserver((entries) => {
         if (entry.isIntersecting) {
             entry.target.style.opacity = '1';
             entry.target.style.transform = 'translateY(0)';
-            observer.unobserve(entry.target); // Stop observing once animated
+        } else {
+            entry.target.style.opacity = '0';
+            entry.target.style.transform = 'translateY(20px)';
         }
     });
 }, observerOptions);
@@ -141,7 +143,7 @@ const updateActiveNav = throttle(() => {
     });
     
     // Handle end of page
-    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 50) {
+    if ((window.innerHeight + window.scrollY) >= document.documentElement.scrollHeight - 80) {
         const lastSection = sections[sections.length - 1];
         if (lastSection) {
             current = lastSection.getAttribute('id');
@@ -150,9 +152,11 @@ const updateActiveNav = throttle(() => {
     
     navItems.forEach(a => {
         a.style.color = '';
+        a.style.textShadow = '';
         a.setAttribute('aria-current', 'false');
         if (a.getAttribute('href').slice(1) === current) {
-            a.style.color = '#1e3a5f';
+            a.style.color = 'var(--accent-color)';
+            a.style.textShadow = '0 0 8px rgba(0, 255, 204, 0.5)';
             a.setAttribute('aria-current', 'true');
         }
     });
@@ -160,32 +164,47 @@ const updateActiveNav = throttle(() => {
 
 window.addEventListener('scroll', updateActiveNav, { passive: true });
 
-// Typing effect for hero section (optimized with requestAnimationFrame)
+// Typing effect for hero section (alternating loop)
 const heroText = document.querySelector('.hero-content h2');
 if (heroText) {
-    const text = heroText.textContent;
+    const phrases = [
+        "Desarrollador de software enfocado en crear sistemas de gestión livianos y eficientes.",
+        "Autodidacta apasionado por resolver problemas reales a través del código.",
+        "Dedicado a la automatización de procesos y optimización de rendimiento."
+    ];
+    let phraseIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+    const delay = 3500; // time fully typed
+
     heroText.textContent = '';
-    let i = 0;
-    let lastTime = 0;
-    const typingSpeed = 30;
-    
-    function typeWriter(currentTime) {
-        if (!lastTime) lastTime = currentTime;
-        const deltaTime = currentTime - lastTime;
+
+    function typeHero() {
+        const currentPhrase = phrases[phraseIndex];
         
-        if (deltaTime >= typingSpeed && i < text.length) {
-            heroText.textContent += text.charAt(i);
-            i++;
-            lastTime = currentTime;
+        if (isDeleting) {
+            heroText.textContent = currentPhrase.substring(0, charIndex - 1);
+            charIndex--;
+        } else {
+            heroText.textContent = currentPhrase.substring(0, charIndex + 1);
+            charIndex++;
         }
-        
-        if (i < text.length) {
-            requestAnimationFrame(typeWriter);
+
+        let typingSpeed = isDeleting ? 20 : 40; // faster typing speed since sentences are longer
+
+        if (!isDeleting && charIndex === currentPhrase.length) {
+            typingSpeed = delay;
+            isDeleting = true;
+        } else if (isDeleting && charIndex === 0) {
+            isDeleting = false;
+            phraseIndex = (phraseIndex + 1) % phrases.length;
+            typingSpeed = 500;
         }
+
+        setTimeout(typeHero, typingSpeed);
     }
-    
-    // Start typing effect after a short delay
-    setTimeout(() => requestAnimationFrame(typeWriter), 500);
+
+    setTimeout(typeHero, 600);
 }
 
 // Loading animation optimized
@@ -201,6 +220,115 @@ window.addEventListener('load', () => {
 });
 
 // Console welcome message
-console.log('%c¡Bienvenido a mi portafolio!', 'color: #1e3a5f; font-size: 20px; font-weight: bold;');
-console.log('%cDesarrollador enfocado en rendimiento y sistemas de gestión livianos.', 'color: #4a4a4a; font-size: 14px;');
-console.log('%cGitHub: https://github.com/YeikoD', 'color: #1e3a5f; font-size: 12px;');
+console.log('%c¡Bienvenido a mi portafolio!', 'color: #00ffcc; font-size: 20px; font-weight: bold; text-shadow: 0 0 5px rgba(0, 255, 204, 0.3);');
+console.log('%cDesarrollador enfocado en rendimiento y sistemas de gestión livianos.', 'color: #94a3b8; font-size: 14px;');
+console.log('%cGitHub: https://github.com/YeikoD', 'color: #00ffcc; font-size: 12px;');
+
+// Typing/deleting loop for the header logo
+const logoText = document.querySelector('.logo h1');
+if (logoText) {
+    const words = ["Anderson Correa", "Yeiko"];
+    let wordIndex = 0;
+    let charIndex = words[wordIndex].length; // start fully written
+    let isDeleting = false;
+    let delay = 3500; // Time fully typed
+
+    function typeLogo() {
+        const currentWord = words[wordIndex];
+        
+        if (isDeleting) {
+            logoText.textContent = currentWord.substring(0, charIndex - 1);
+            charIndex--;
+        } else {
+            logoText.textContent = currentWord.substring(0, charIndex + 1);
+            charIndex++;
+        }
+
+        let typingSpeed = isDeleting ? 40 : 80;
+
+        if (!isDeleting && charIndex === currentWord.length) {
+            typingSpeed = delay;
+            isDeleting = true;
+        } else if (isDeleting && charIndex === 0) {
+            isDeleting = false;
+            wordIndex = (wordIndex + 1) % words.length;
+            typingSpeed = 500;
+        }
+
+        setTimeout(typeLogo, typingSpeed);
+    }
+
+    // Wait 7 seconds initially so the user focuses on the hero typing animation first
+    setTimeout(() => {
+        isDeleting = true;
+        typeLogo();
+    }, 7000);
+}
+
+// Interactive Hero Glow (Mouse Tracker with Lerp, Stretch & Breathe)
+const heroSection = document.querySelector('.hero');
+const heroGlow = document.querySelector('.hero-glow');
+const heroMap = document.querySelector('.hero-map');
+
+if (heroSection && heroGlow) {
+    let mouseX = window.innerWidth / 2;
+    let mouseY = window.innerHeight / 2;
+    let currentX = mouseX;
+    let currentY = mouseY;
+
+    // Weight/Inertia coefficient
+    const lerpFactor = 0.055;
+
+    window.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+    });
+
+    function updateGlowPosition() {
+        const rect = heroSection.getBoundingClientRect();
+        
+        // Only run calculations and updates if hero is visible on screen
+        if (rect.bottom > 0 && rect.top < window.innerHeight) {
+            const dx = mouseX - currentX;
+            const dy = mouseY - currentY;
+
+            // Apply LERP interpolation for smooth inertia
+            currentX += dx * lerpFactor;
+            currentY += dy * lerpFactor;
+
+            // Calculate speed and angle for the comet trail stretch
+            const speed = Math.sqrt(dx * dx + dy * dy);
+            const angle = Math.atan2(dy, dx) * (180 / Math.PI);
+
+            // Organic breathing effect using sine wave over time
+            const time = Date.now() / 1000;
+            const breathe = 1 + Math.sin(time * 3) * 0.06; // oscillates between 0.94 and 1.06
+
+            // Dynamic elongation (trail stretch) based on movement speed
+            const stretch = 1 + Math.min(speed * 0.005, 0.55); // stretches up to 1.55x
+            const squeeze = 1 - Math.min(speed * 0.002, 0.25); // squeezes width-wise to maintain shape
+
+            // Coordinates relative to the hero section
+            const relX = currentX - rect.left;
+            const relY = currentY - rect.top;
+
+            const scaleX = stretch * breathe;
+            const scaleY = squeeze * breathe;
+
+            // Map Parallax Effect (Inertia with LERP)
+            if (heroMap) {
+                const mapTx = (relX - rect.width / 2) * 0.035;
+                const mapTy = (relY - rect.height / 2) * 0.035;
+                heroMap.style.transform = `translate3d(calc(-50% + ${mapTx}px), calc(-50% + ${mapTy}px), 0)`;
+            }
+
+            // hardware accelerated transformations (translation + rotation + stretch scaling)
+            heroGlow.style.transform = `translate3d(${relX}px, ${relY}px, 0) rotate(${angle}deg) scale(${scaleX}, ${scaleY})`;
+        }
+
+        requestAnimationFrame(updateGlowPosition);
+    }
+
+    // Start loop
+    requestAnimationFrame(updateGlowPosition);
+}

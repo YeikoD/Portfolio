@@ -1,42 +1,58 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Portafolio de Anderson Correa - Desarrollador especializado en sistemas de gestión livianos con Electron, Node.js y SQLite. Optimizado para rendimiento y eficiencia.">
-    <meta name="keywords" content="desarrollador, software, electron, nodejs, sqlite, gestión, inventario, rendimiento, sistemas livianos">
+    <meta name="description"
+        content="Portafolio de Anderson Correa - Desarrollador especializado en sistemas de gestión livianos con Electron, Node.js y SQLite. Optimizado para rendimiento y eficiencia.">
+    <meta name="keywords"
+        content="desarrollador, software, electron, nodejs, sqlite, gestión, inventario, rendimiento, sistemas livianos">
     <meta name="author" content="Anderson Correa">
     <meta name="robots" content="index, follow">
     <meta name="theme-color" content="#000000">
-    
+
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://github.com/YeikoD">
     <meta property="og:title" content="Anderson Correa | Desarrollador de Software">
-    <meta property="og:description" content="Desarrollador especializado en sistemas de gestión livianos con Electron, Node.js y SQLite.">
+    <meta property="og:description"
+        content="Desarrollador especializado en sistemas de gestión livianos con Electron, Node.js y SQLite.">
     <meta property="og:image" content="https://via.placeholder.com/1200x630/000000/E8E6E6?text=Anderson+Correa">
-    
+
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://github.com/YeikoD">
     <meta property="twitter:title" content="Anderson Correa | Desarrollador de Software">
-    <meta property="twitter:description" content="Desarrollador especializado en sistemas de gestión livianos con Electron, Node.js y SQLite.">
+    <meta property="twitter:description"
+        content="Desarrollador especializado en sistemas de gestión livianos con Electron, Node.js y SQLite.">
     <meta property="twitter:image" content="https://via.placeholder.com/1200x630/000000/E8E6E6?text=Anderson+Correa">
-    
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="assets/logos/logo_icon_32px.ico">
     <title>Anderson Correa | Desarrollador de Software</title>
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
-    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
-    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        media="print" onload="this.media='all'">
+    <noscript>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    </noscript>
+
     <!-- Preconnect for performance -->
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <link rel="preconnect" href="https://github.com">
 </head>
+
 <body>
     <!-- Header -->
     <header class="header" role="banner">
         <nav class="nav" role="navigation" aria-label="Navegación principal">
             <div class="logo">
+                <img src="assets/logos/logo_yeiko_v1.png" alt="Logo Yeiko" class="logo-img">
                 <h1>Anderson Correa</h1>
             </div>
             <ul class="nav-links" role="menubar">
@@ -44,7 +60,8 @@
                 <li role="none"><a href="#proyectos" role="menuitem">Proyectos</a></li>
                 <li role="none"><a href="#contacto" role="menuitem">Contacto</a></li>
             </ul>
-            <button class="hamburger" aria-label="Abrir menú de navegación" aria-expanded="false" aria-controls="nav-links">
+            <button class="hamburger" aria-label="Abrir menú de navegación" aria-expanded="false"
+                aria-controls="nav-links">
                 <span></span>
                 <span></span>
                 <span></span>
@@ -54,33 +71,40 @@
 
     <!-- Hero Section -->
     <section id="inicio" class="hero" aria-labelledby="hero-title">
+        <div class="hero-glow" aria-hidden="true"></div>
+        <div class="hero-map" aria-hidden="true">
+            <img src="assets/Uruguay_departments_blank.svg" alt="Mapa de Uruguay" class="map-bg">
+            <div class="map-node node-mvd" style="top: 96%; left: 42%;" title="Montevideo"></div>
+        </div>
         <div class="hero-content">
-            <h2 id="hero-title">Desarrollador con enfoque en creación de sistemas de gestión livianos, interfaces de usuario intuitivas y automatización de procesos.</h2>
+            <h2 id="hero-title">Desarrollador con enfoque en creación de sistemas de gestión livianos, interfaces de
+                usuario intuitivas y automatización de procesos.</h2>
             <div class="hero-buttons">
                 <a href="#proyectos" class="btn btn-primary" aria-label="Ver mis proyectos destacados">Ver Proyectos</a>
                 <a href="#contacto" class="btn btn-secondary" aria-label="Contactar conmigo">Contactar</a>
             </div>
         </div>
-        <div class="hero-scroll" aria-hidden="true">
-            <i class="fas fa-chevron-down" aria-label="Scroll hacia abajo"></i>
-        </div>
+        <a href="#proyectos" class="hero-scroll" aria-label="Desplazarse a la sección de proyectos">
+            <i class="fas fa-chevron-down" aria-hidden="true"></i>
+        </a>
     </section>
 
     <!-- Proyectos Section -->
     <section id="proyectos" class="projects" aria-labelledby="projects-title">
         <div class="container">
-            <h2 id="projects-title" class="section-title">Proyectos Destacados</h2>
-            
+            <h2 id="projects-title" class="section-title">Proyectos</h2>
+
             <!-- Proyecto Estrella -->
             <article class="project featured" aria-labelledby="project-1-title">
                 <div class="project-image">
                     <img src="assets/screenshots/captura_logsys.png" alt="Captura de interfaz de LogSys" loading="lazy">
                 </div>
                 <div class="project-content">
-                    <span class="project-badge">Proyecto Estrella</span>
+                    <span class="project-badge">Proyecto Destacado</span>
                     <h3 id="project-1-title">LogSys — Gestión de Inventario y Personal</h3>
                     <p class="project-description">
-                        Sistema empresarial ligero para la gestión de inventario y personal, diseñado para funcionar eficientemente en equipos con recursos limitados.
+                        Sistema empresarial ligero para la gestión de inventario y personal, diseñado para funcionar
+                        eficientemente en equipos con recursos limitados.
                     </p>
                     <div class="tech-specs" aria-label="Tecnologías utilizadas">
                         <span class="tech-item"><i class="fab fa-microsoft" aria-hidden="true"></i> ASP.NET Core</span>
@@ -90,19 +114,27 @@
                     </div>
                     <div class="project-features">
                         <ul aria-label="Características principales">
-                            <li><i class="fas fa-check" aria-hidden="true"></i> Control de stock con trazabilidad de movimientos</li>
-                            <li><i class="fas fa-check" aria-hidden="true"></i> Gestión de personal por cargos y departamentos</li>
-                            <li><i class="fas fa-check" aria-hidden="true"></i> Autenticación JWT con roles y permisos</li>
-                            <li><i class="fas fa-check" aria-hidden="true"></i> Instalador Windows autocontenido (sin .NET ni Node)</li>
-                            <li><i class="fas fa-check" aria-hidden="true"></i> Reportes y exportación a Excel y PDF</li>
-                            <li><i class="fas fa-check" aria-hidden="true"></i> Dashboard con gráficos de evolución y stock</li>
+                            <li><i class="fas fa-check" aria-hidden="true"></i> Control de stock con trazabilidad de
+                                movimientos</li>
+                            <li><i class="fas fa-check" aria-hidden="true"></i> Gestión de personal por cargos y
+                                departamentos</li>
+                            <li><i class="fas fa-check" aria-hidden="true"></i> Autenticación JWT con roles y permisos
+                            </li>
+                            <li><i class="fas fa-check" aria-hidden="true"></i> Instalador Windows autocontenido (sin
+                                .NET ni Node)</li>
+                            <li><i class="fas fa-check" aria-hidden="true"></i> Reportes y exportación a Excel y PDF
+                            </li>
+                            <li><i class="fas fa-check" aria-hidden="true"></i> Dashboard con gráficos de evolución y
+                                stock</li>
                         </ul>
                     </div>
                     <div class="project-actions">
-                        <a href="https://github.com/YeikoD/LogiSys/releases" target="_blank" rel="noopener noreferrer" class="btn btn-primary" aria-label="Descargar instalador de LogSys">
+                        <a href="https://github.com/YeikoD/LogiSys/releases" target="_blank" rel="noopener noreferrer"
+                            class="btn btn-primary" aria-label="Descargar instalador de LogSys">
                             <i class="fas fa-download" aria-hidden="true"></i> Descargar instalador
                         </a>
-                        <a href="https://github.com/YeikoD/LogiSys" target="_blank" rel="noopener noreferrer" class="btn btn-secondary" aria-label="Ver código en GitHub">
+                        <a href="https://github.com/YeikoD/LogiSys" target="_blank" rel="noopener noreferrer"
+                            class="btn btn-secondary" aria-label="Ver código en GitHub">
                             <i class="fab fa-github" aria-hidden="true"></i> Ver en GitHub
                         </a>
                     </div>
@@ -113,7 +145,8 @@
             <div class="demo-section" aria-labelledby="demo-title">
                 <h3 id="demo-title"><i class="fas fa-play-circle" aria-hidden="true"></i> Demo del Sistema</h3>
                 <div class="video-wrapper">
-                    <video controls preload="metadata" poster="assets/screenshots/captura_logsys.png" aria-label="Video demostrativo de LogSys">
+                    <video controls preload="metadata" poster="assets/screenshots/captura_logsys.png"
+                        aria-label="Video demostrativo de LogSys">
                         <source src="assets/videos/logsys_demo.mp4" type="video/mp4">
                         Tu navegador no soporta video HTML5.
                     </video>
@@ -123,12 +156,14 @@
             <!-- Proyecto DALTON Visualizer -->
             <article class="project" aria-labelledby="project-2-title">
                 <div class="project-image">
-                    <img src="assets/screenshots/captura_dalton_visualizer.png" alt="Captura de interfaz del simulador DALTON Visualizer" loading="lazy">
+                    <img src="assets/screenshots/captura_dalton_visualizer.png"
+                        alt="Captura de interfaz del simulador DALTON Visualizer" loading="lazy">
                 </div>
                 <div class="project-content">
                     <h3 id="project-2-title">DALTON Visualizer</h3>
                     <p class="project-description">
-                        Simulador 3D interactivo en Unity para visualizar, instanciar y combinar elementos químicos según modelos atómicos históricos y compuestos reales.
+                        Simulador 3D interactivo en Unity para visualizar, instanciar y combinar elementos químicos
+                        según modelos atómicos históricos y compuestos reales.
                     </p>
                     <div class="tech-specs" aria-label="Tecnologías utilizadas">
                         <span class="tech-item"><i class="fab fa-unity" aria-hidden="true"></i> Unity</span>
@@ -137,18 +172,26 @@
                     </div>
                     <div class="project-features">
                         <ul aria-label="Características principales">
-                            <li><i class="fas fa-check" aria-hidden="true"></i> Instanciación de átomos (H, C, O, Cu, Zn, Au, Hg...)</li>
-                            <li><i class="fas fa-check" aria-hidden="true"></i> Generación de compuestos con masa total y fórmula</li>
-                            <li><i class="fas fa-check" aria-hidden="true"></i> Panel informativo con teoría y clasificación de Dalton</li>
-                            <li><i class="fas fa-check" aria-hidden="true"></i> Registro de eventos en tiempo real (Log)</li>
-                            <li><i class="fas fa-check" aria-hidden="true"></i> Cámara 3D libre con zoom, rotación y desplazamiento</li>
+                            <li><i class="fas fa-check" aria-hidden="true"></i> Instanciación de átomos (H, C, O, Cu,
+                                Zn, Au, Hg...)</li>
+                            <li><i class="fas fa-check" aria-hidden="true"></i> Generación de compuestos con masa total
+                                y fórmula</li>
+                            <li><i class="fas fa-check" aria-hidden="true"></i> Panel informativo con teoría y
+                                clasificación de Dalton</li>
+                            <li><i class="fas fa-check" aria-hidden="true"></i> Registro de eventos en tiempo real (Log)
+                            </li>
+                            <li><i class="fas fa-check" aria-hidden="true"></i> Cámara 3D libre con zoom, rotación y
+                                desplazamiento</li>
                         </ul>
                     </div>
                     <div class="project-actions">
-                        <a href="https://github.com/YeikoD/Proyecto-Dalton/releases" target="_blank" rel="noopener noreferrer" class="btn btn-primary" aria-label="Descargar instalador de DALTON Visualizer">
+                        <a href="https://github.com/YeikoD/Proyecto-Dalton/releases" target="_blank"
+                            rel="noopener noreferrer" class="btn btn-primary"
+                            aria-label="Descargar instalador de DALTON Visualizer">
                             <i class="fas fa-download" aria-hidden="true"></i> Descargar instalador
                         </a>
-                        <a href="https://github.com/YeikoD/Proyecto-Dalton" target="_blank" rel="noopener noreferrer" class="btn btn-secondary" aria-label="Ver código en GitHub">
+                        <a href="https://github.com/YeikoD/Proyecto-Dalton" target="_blank" rel="noopener noreferrer"
+                            class="btn btn-secondary" aria-label="Ver código en GitHub">
                             <i class="fab fa-github" aria-hidden="true"></i> Ver en GitHub
                         </a>
                     </div>
@@ -159,7 +202,8 @@
             <div class="demo-section" aria-labelledby="demo-dalton-title">
                 <h3 id="demo-dalton-title"><i class="fas fa-play-circle" aria-hidden="true"></i> Demo del Simulador</h3>
                 <div class="video-wrapper">
-                    <video controls preload="metadata" poster="assets/screenshots/captura_dalton_visualizer.png" aria-label="Video demostrativo de DALTON Visualizer">
+                    <video controls preload="metadata" poster="assets/screenshots/captura_dalton_visualizer.png"
+                        aria-label="Video demostrativo de DALTON Visualizer">
                         <source src="assets/videos/dalton_visualizer_demo.mp4" type="video/mp4">
                         Tu navegador no soporta video HTML5.
                     </video>
@@ -173,7 +217,8 @@
         <div class="container">
             <h2 id="contact-title" class="section-title">Contacto</h2>
             <div class="contact-links">
-                <a href="https://github.com/YeikoD" target="_blank" rel="noopener noreferrer" class="contact-card contact-card-centered" aria-label="Visitar perfil de GitHub">
+                <a href="https://github.com/YeikoD" target="_blank" rel="noopener noreferrer"
+                    class="contact-card contact-card-centered" aria-label="Visitar perfil de GitHub">
                     <i class="fab fa-github" aria-hidden="true"></i>
                     <h3>GitHub</h3>
                     <p>Ver mis repositorios</p>
@@ -185,7 +230,7 @@
     <!-- Footer -->
     <footer class="footer" role="contentinfo">
         <div class="container">
-            <p>&copy; 2024 Anderson Dario Correa Silva. Powered By Yeiko.</p>
+            <p>&copy; 2026 Anderson Dario Correa Silva. Powered By Yeiko.</p>
             <p class="footer-performance">
                 <i class="fas fa-bolt" aria-hidden="true"></i> Optimizado para rendimiento
             </p>
@@ -194,4 +239,5 @@
 
     <script src="script.js" defer></script>
 </body>
+
 </html>
