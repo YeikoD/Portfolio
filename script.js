@@ -265,70 +265,217 @@ if (logoText) {
     }, 7000);
 }
 
-// Interactive Hero Glow (Mouse Tracker with Lerp, Stretch & Breathe)
+// Interactive Circuit Canvas (Reactive PCB Grid Effect)
 const heroSection = document.querySelector('.hero');
-const heroGlow = document.querySelector('.hero-glow');
 const heroMap = document.querySelector('.hero-map');
+const canvas = document.getElementById('circuit-canvas');
 
-if (heroSection && heroGlow) {
-    let mouseX = window.innerWidth / 2;
-    let mouseY = window.innerHeight / 2;
-    let currentX = mouseX;
-    let currentY = mouseY;
+if (heroSection && canvas) {
+    const ctx = canvas.getContext('2d');
+    let mouseX = -1000;
+    let mouseY = -1000;
+    let nodes = [];
+    let traces = [];
+    const GRID_SPACING = 80;
+    const PROXIMITY_RADIUS = 100;
+    const AMBIENT_ALPHA = 0.018;
+    const MAX_GLOW_ALPHA = 0.4;
+    const ACCENT_R = 0, ACCENT_G = 255, ACCENT_B = 204;
 
-    // Weight/Inertia coefficient
-    const lerpFactor = 0.055;
+    function resizeCanvas() {
+        const rect = heroSection.getBoundingClientRect();
+        const dpr = window.devicePixelRatio || 1;
+        canvas.width = rect.width * dpr;
+        canvas.height = rect.height * dpr;
+        canvas.style.width = rect.width + 'px';
+        canvas.style.height = rect.height + 'px';
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        generateCircuit(rect.width, rect.height);
+    }
+
+    function generateCircuit(w, h) {
+        nodes = [];
+        traces = [];
+        const cols = Math.ceil(w / GRID_SPACING) + 1;
+        const rows = Math.ceil(h / GRID_SPACING) + 1;
+        const offsetX = (w - (cols - 1) * GRID_SPACING) / 2;
+        const offsetY = (h - (rows - 1) * GRID_SPACING) / 2;
+
+        // Create grid nodes with slight jitter
+        for (let r = 0; r < rows; r++) {
+            for (let c = 0; c < cols; c++) {
+                const jitterX = (Math.random() - 0.5) * 12;
+                const jitterY = (Math.random() - 0.5) * 12;
+                nodes.push({
+                    x: offsetX + c * GRID_SPACING + jitterX,
+                    y: offsetY + r * GRID_SPACING + jitterY,
+                    glow: 0,
+                    col: c,
+                    row: r
+                });
+            }
+        }
+
+        // Create circuit traces (horizontal + vertical connections, PCB-style)
+        for (let i = 0; i < nodes.length; i++) {
+            const n = nodes[i];
+            // Connect to right neighbor
+            if (n.col < cols - 1) {
+                const rightIdx = n.row * cols + (n.col + 1);
+                if (rightIdx < nodes.length && Math.random() > 0.2) {
+                    traces.push({ from: i, to: rightIdx, glow: 0 });
+                }
+            }
+            // Connect to bottom neighbor
+            if (n.row < rows - 1) {
+                const downIdx = (n.row + 1) * cols + n.col;
+                if (downIdx < nodes.length && Math.random() > 0.3) {
+                    traces.push({ from: i, to: downIdx, glow: 0 });
+                }
+            }
+        }
+
+        // Add a few random extra traces for visual interest (diagonal/angled)
+        for (let k = 0; k < Math.floor(nodes.length * 0.02); k++) {
+            const a = Math.floor(Math.random() * nodes.length);
+            const b = Math.floor(Math.random() * nodes.length);
+            if (a !== b) {
+                traces.push({ from: a, to: b, glow: 0 });
+            }
+        }
+    }
+
+    function dist(x1, y1, x2, y2) {
+        const dx = x1 - x2;
+        const dy = y1 - y2;
+        return Math.sqrt(dx * dx + dy * dy);
+    }
+
+    function lerpVal(current, target, factor) {
+        return current + (target - current) * factor;
+    }
+
+    function drawCircuit() {
+        const rect = heroSection.getBoundingClientRect();
+        const w = rect.width;
+        const h = rect.height;
+        ctx.clearRect(0, 0, w, h);
+
+        const relMouseX = mouseX - rect.left;
+        const relMouseY = mouseY - rect.top;
+        const mouseInHero = relMouseX > -200 && relMouseX < w + 200 &&
+                            relMouseY > -200 && relMouseY < h + 200;
+
+        // Update node glow values
+        for (let i = 0; i < nodes.length; i++) {
+            const n = nodes[i];
+            // Center bias: fade circuits toward edges so the map stands out
+            const nx = n.x / w;
+            const ny = n.y / h;
+            const distFromCenter = Math.sqrt((nx - 0.5) * (nx - 0.5) + (ny - 0.5) * (ny - 0.5));
+            const centerFade = 1 - Math.min(distFromCenter * 1.4, 0.7);
+
+            let targetGlow = AMBIENT_ALPHA * centerFade;
+            if (mouseInHero) {
+                const d = dist(relMouseX, relMouseY, n.x, n.y);
+                if (d < PROXIMITY_RADIUS) {
+                    const intensity = 1 - (d / PROXIMITY_RADIUS);
+                    targetGlow = AMBIENT_ALPHA * centerFade + (MAX_GLOW_ALPHA - AMBIENT_ALPHA) * intensity * centerFade;
+                }
+            }
+            n.glow = lerpVal(n.glow, targetGlow, 0.08);
+        }
+
+        // Draw traces
+        ctx.lineCap = 'round';
+        for (let i = 0; i < traces.length; i++) {
+            const t = traces[i];
+            const fromNode = nodes[t.from];
+            const toNode = nodes[t.to];
+            const avgGlow = (fromNode.glow + toNode.glow) / 2;
+
+            // Update trace glow
+            t.glow = lerpVal(t.glow, avgGlow, 0.08);
+
+            if (t.glow < 0.01) continue;
+
+            ctx.beginPath();
+            ctx.moveTo(fromNode.x, fromNode.y);
+
+            // PCB-style right-angle traces
+            const dx = toNode.x - fromNode.x;
+            const dy = toNode.y - fromNode.y;
+            if (Math.abs(dx) > 5 && Math.abs(dy) > 5) {
+                // L-shaped trace
+                ctx.lineTo(fromNode.x + dx, fromNode.y);
+                ctx.lineTo(toNode.x, toNode.y);
+            } else {
+                ctx.lineTo(toNode.x, toNode.y);
+            }
+
+            ctx.strokeStyle = `rgba(${ACCENT_R}, ${ACCENT_G}, ${ACCENT_B}, ${t.glow * 0.35})`;
+            ctx.lineWidth = 1;
+            ctx.stroke();
+        }
+
+        // Draw nodes
+        for (let i = 0; i < nodes.length; i++) {
+            const n = nodes[i];
+            if (n.glow < 0.01) continue;
+
+            const radius = 1.5 + n.glow * 1.5;
+            const blurSize = n.glow * 8;
+
+            // Glow aura
+            if (n.glow > 0.1) {
+                ctx.beginPath();
+                ctx.arc(n.x, n.y, radius + blurSize, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(${ACCENT_R}, ${ACCENT_G}, ${ACCENT_B}, ${n.glow * 0.1})`;
+                ctx.fill();
+            }
+
+            // Core dot
+            ctx.beginPath();
+            ctx.arc(n.x, n.y, radius, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(${ACCENT_R}, ${ACCENT_G}, ${ACCENT_B}, ${n.glow})`;
+            ctx.fill();
+        }
+
+        requestAnimationFrame(drawCircuit);
+    }
 
     window.addEventListener('mousemove', (e) => {
         mouseX = e.clientX;
         mouseY = e.clientY;
     });
 
-    function updateGlowPosition() {
-        const rect = heroSection.getBoundingClientRect();
-        
-        // Only run calculations and updates if hero is visible on screen
-        if (rect.bottom > 0 && rect.top < window.innerHeight) {
-            const dx = mouseX - currentX;
-            const dy = mouseY - currentY;
+    window.addEventListener('mouseleave', () => {
+        mouseX = -1000;
+        mouseY = -1000;
+    });
 
-            // Apply LERP interpolation for smooth inertia
-            currentX += dx * lerpFactor;
-            currentY += dy * lerpFactor;
+    window.addEventListener('resize', debounce(resizeCanvas, 200));
 
-            // Calculate speed and angle for the comet trail stretch
-            const speed = Math.sqrt(dx * dx + dy * dy);
-            const angle = Math.atan2(dy, dx) * (180 / Math.PI);
+    // Map parallax (lerp-based, synced with circuit)
+    let mapCurrentX = 0;
+    let mapCurrentY = 0;
 
-            // Organic breathing effect using sine wave over time
-            const time = Date.now() / 1000;
-            const breathe = 1 + Math.sin(time * 3) * 0.06; // oscillates between 0.94 and 1.06
-
-            // Dynamic elongation (trail stretch) based on movement speed
-            const stretch = 1 + Math.min(speed * 0.005, 0.55); // stretches up to 1.55x
-            const squeeze = 1 - Math.min(speed * 0.002, 0.25); // squeezes width-wise to maintain shape
-
-            // Coordinates relative to the hero section
-            const relX = currentX - rect.left;
-            const relY = currentY - rect.top;
-
-            const scaleX = stretch * breathe;
-            const scaleY = squeeze * breathe;
-
-            // Map Parallax Effect (Inertia with LERP)
-            if (heroMap) {
-                const mapTx = (relX - rect.width / 2) * 0.035;
-                const mapTy = (relY - rect.height / 2) * 0.035;
-                heroMap.style.transform = `translate3d(calc(-50% + ${mapTx}px), calc(-50% + ${mapTy}px), 0)`;
-            }
-
-            // hardware accelerated transformations (translation + rotation + stretch scaling)
-            heroGlow.style.transform = `translate3d(${relX}px, ${relY}px, 0) rotate(${angle}deg) scale(${scaleX}, ${scaleY})`;
+    function updateMapParallax() {
+        if (heroMap) {
+            const rect = heroSection.getBoundingClientRect();
+            const relMouseX = mouseX - rect.left;
+            const relMouseY = mouseY - rect.top;
+            const targetTx = (relMouseX - rect.width / 2) * 0.03;
+            const targetTy = (relMouseY - rect.height / 2) * 0.03;
+            mapCurrentX = lerpVal(mapCurrentX, targetTx, 0.04);
+            mapCurrentY = lerpVal(mapCurrentY, targetTy, 0.04);
+            heroMap.style.transform = `translate3d(calc(-50% + ${mapCurrentX}px), calc(-50% + ${mapCurrentY}px), 0)`;
         }
-
-        requestAnimationFrame(updateGlowPosition);
+        requestAnimationFrame(updateMapParallax);
     }
 
-    // Start loop
-    requestAnimationFrame(updateGlowPosition);
+    // Init
+    resizeCanvas();
+    requestAnimationFrame(drawCircuit);
+    requestAnimationFrame(updateMapParallax);
 }
