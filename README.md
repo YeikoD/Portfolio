@@ -1,64 +1,79 @@
-# Portafolio Personal
+# Portafolio Personal - Anderson Correa
 
-Portafolio web profesional diseñado para showcase de proyectos de desarrollo de software, con enfoque en sistemas de gestión livianos y interfaces de usuario intuitivas.
+Portafolio web profesional diseñado para showcase de proyectos de desarrollo de software, con enfoque en sistemas de gestión livianos, interfaces de usuario intuitivas y automatización de procesos.
 
-![Portafolio Preview](https://via.placeholder.com/800x400/2563eb/ffffff?text=Portafolio+Preview)
+![Portafolio Preview](https://via.placeholder.com/800x400/0d0e12/00ffcc?text=Anderson+Correa+Portfolio)
 
 ## 🌟 Características
 
-- **Diseño Moderno y Responsivo**: Interfaz limpia que se adapta a cualquier dispositivo
-- **Proyecto Estrella Destacado**: Sección especial para el proyecto más importante
-- **Demo Integrada**: Espacio para video demostrativo de proyectos
-- **Enlaces Directos**: Acceso rápido a GitHub, LinkedIn y descarga de CV
-- **Animaciones Suaves**: Transiciones y efectos visuales atractivos
-- **Navegación Intuitiva**: Menú responsive con smooth scroll
-- **Optimizado para SEO**: Estructura semántica y meta tags
+- **Diseño Tech-Modern**: Tema oscuro con acentos cyan para estética profesional
+- **Efectos Visuales Avanzados**: Glow effects, parallax, typing animations y transiciones suaves
+- **Proyecto Estrella Destacado**: Sección especial para el proyecto más importante (LogSys)
+- **Demo Integrada**: Videos demostrativos de proyectos con reproductores HTML5
+- **Enlace Directo a GitHub**: Acceso rápido a repositorios y proyectos
+- **Animaciones Interactivas**: Efectos hover, smooth scroll y parallax en mapa
+- **Optimizado para Performance**: CSS containment, intersection observer, throttling
+- **Totalmente Responsivo**: Adaptable desde monitores antiguos 4:3 hasta modernos ultrawide
+- **SEO Optimizado**: Meta tags completos, Open Graph y Twitter cards
+- **Accesibilidad**: Atributos ARIA, navegación por teclado y contraste WCAG
 
 ## 🚀 Tecnologías Utilizadas
 
-- **HTML5**: Estructura semántica y accesible
-- **CSS3**: Estilos modernos con variables CSS y Flexbox/Grid
-- **JavaScript**: Interactividad y animaciones
-- **Font Awesome**: Iconos vectoriales
-- **Google Fonts**: Tipografía profesional
+- **HTML5**: Estructura semántica, accesibilidad y SEO
+- **CSS3**: Variables CSS, Flexbox, animaciones, media queries, backdrop-filter
+- **JavaScript (Vanilla)**: Interactividad, animaciones, performance optimization
+- **Font Awesome 6.4**: Iconos vectoriales optimizados
+- **Google Fonts**: JetBrains Mono (código) y Space Grotesk (contenido)
 
 ## 📁 Estructura del Proyecto
 
 ```
-portafolio/
+Portfolio/
 ├── index.html          # Página principal
-├── styles.css          # Estilos y diseño
-├── script.js           # Funcionalidad JavaScript
+├── styles.css          # Estilos y diseño (940+ líneas)
+├── script.js           # Funcionalidad JavaScript (334 líneas)
 ├── README.md           # Documentación
-└── assets/             # Imágenes y recursos (opcional)
+├── .gitignore          # Archivos ignorados por Git
+├── CNAME               # Configuración de dominio personalizado
+└── assets/             # Imágenes y recursos
+    ├── logos/          # Logos y favicons
     ├── screenshots/    # Capturas de proyectos
-    └── videos/         # Videos demostrativos
+    ├── videos/         # Videos demostrativos
+    └── Uruguay_departments_blank.svg  # Mapa SVG
 ```
 
 ## 🛠️ Instalación y Uso
 
 1. **Clonar el repositorio**:
    ```bash
-   git clone https://github.com/tu-usuario/portafolio.git
-   cd portafolio
+   git clone https://github.com/YeikoD/Portfolio.git
+   cd Portfolio
    ```
 
 2. **Personalizar el contenido**:
    - Editar `index.html` para cambiar tu información personal
-   - Actualizar enlaces a GitHub, LinkedIn y CV
-   - Reemplazar placeholders de imágenes con tus capturas reales
-   - Agregar el video demostrativo de tu proyecto
+   - Actualizar enlaces a GitHub y redes sociales
+   - Reemplazar imágenes con tus capturas reales
+   - Agregar videos demostrativos de tus proyectos
 
 3. **Personalizar estilos**:
    - Modificar `styles.css` para ajustar colores y diseño
-   - Las variables CSS al principio del archivo facilitan la personalización
+   - Las variables CSS al principio facilitan la personalización:
+   ```css
+   :root {
+       --primary-color: #0d0e12;
+       --secondary-color: #12131a;
+       --accent-color: #00ffcc;
+       --accent-glow: rgba(0, 255, 204, 0.15);
+   }
+   ```
 
 4. **Ejecutar localmente**:
    ```bash
-   # Usando un servidor simple de Python
+   # Usando Python
    python -m http.server 8000
    
-   # O usando Node.js con http-server
+   # O usando Node.js
    npx http-server
    ```
 
@@ -67,60 +82,58 @@ portafolio/
    http://localhost:8000
    ```
 
-## 📝 Personalización
-
-### Información Personal
-Actualiza los siguientes elementos en `index.html`:
-- Tu nombre en el logo
-- Descripción en la sección hero
-- Enlaces a tus redes sociales
-- Información del proyecto estrella
-
-### Colores y Tema
-Modifica las variables CSS en `styles.css`:
-```css
-:root {
-    --primary-color: #2563eb;      /* Color principal */
-    --secondary-color: #1e40af;    /* Color secundario */
-    --accent-color: #3b82f6;       /* Color de acento */
-    --dark-bg: #0f172a;            /* Fondo oscuro */
-    --light-bg: #f8fafc;           /* Fondo claro */
-}
-```
-
-### Agregar Más Proyectos
-Copia la estructura del `div` con clase `project` y ajusta el contenido según tus necesidades.
-
 ## 🎯 Secciones del Portafolio
 
 ### 1. Hero Section
-Presentación personal breve y directa con llamadas a la acción.
+- **Presentación dinámica**: Efecto typing con múltiples frases
+- **Mapa de Uruguay**: SVG interactivo con parallax y glowing effects
+- **Glow effect**: Seguimiento del mouse con física suave
+- **Call-to-action**: Botones para ver proyectos y contacto
 
 ### 2. Proyectos
-- **Proyecto Estrella**: Tu proyecto más importante destacado
-- **Demo**: Video o capturas mostrando funcionalidades
-- **Características**: Lista de tecnologías y beneficios
+- **LogSys (Proyecto Estrella)**: Sistema de gestión de inventario y personal
+  - ASP.NET Core, React, Tauri 2, SQLite
+  - Video demostrativo integrado
+  - Características detalladas y tecnologías
+- **DALTON Visualizer**: Simulador 3D de química en Unity
+  - Unity, C#, modelos atómicos históricos
+  - Video demostrativo interactivo
+  - Features educativas
 
 ### 3. Contacto
-Enlaces directos a:
-- GitHub (repositorios)
-- LinkedIn (perfil profesional)
-- CV (descarga en PDF)
+- **GitHub**: Enlace directo al perfil de GitHub
 
 ## 📱 Responsive Design
 
-El portafolio está optimizado para:
-- 📱 Dispositivos móviles (< 480px)
-- 📱 Tablets (480px - 768px)
-- 💻 Desktops (> 768px)
+El portafolio está optimizado para todas las resoluciones:
+- 🖥️ **Ultrawide (>1600px)**: Tamaño original del mapa
+- 💻 **Desktop moderno (1366-1600px)**: 80% del tamaño original
+- 💻 **Laptop estándar (1024-1366px)**: 70% del tamaño original
+- 💻 **Laptop antigua (800-1024px)**: 60% del tamaño original
+- 📱 **Tablet (600-800px)**: 55% del tamaño original
+- 📱 **Móvil grande (480-600px)**: 50% del tamaño original
+- 📱 **Móvil (<480px)**: 40% del tamaño original
 
 ## 🎨 Características de Diseño
 
-- **Tipografía Limpia**: Fuente Sans-serif moderna
-- **Contraste Accesible**: Colores que cumplen estándares WCAG
-- **Micro-interacciones**: Efectos hover y transiciones suaves
-- **Loading Animation**: Transición de entrada elegante
-- **Smooth Scroll**: Navegación fluida entre secciones
+- **Tipografía Tech**: JetBrains Mono para código, Space Grotesk para contenido
+- **Tema Oscuro Profesional**: Fondo #0d0e12 con acentos #00ffcc
+- **Efectos Visuales**:
+  - Glow effects con seguimiento de mouse
+  - Parallax en mapa de Uruguay
+  - Animaciones typing en hero y logo
+  - Transiciones suaves en hover
+  - Pulsing nodes en el mapa
+- **Performance**:
+  - CSS containment para mejor rendimiento
+  - Intersection Observer para animaciones
+  - Throttling y debouncing en eventos scroll
+  - will-change y backface-visibility optimizaciones
+- **Accesibilidad**:
+  - Atributos ARIA completos
+  - Navegación por teclado
+  - Contraste WCAG AA compliant
+  - Etiquetas aria-label descriptivas
 
 ## 🚀 Despliegue
 
@@ -128,7 +141,7 @@ El portafolio está optimizado para:
 1. Sube el código a tu repositorio
 2. Ve a Settings > Pages
 3. Selecciona la rama main
-4. Tu portafolio estará disponible en `https://tu-usuario.github.io/portafolio`
+4. Tu portafolio estará disponible en `https://yeikod.github.io/Portfolio`
 
 ### Netlify
 1. Arrastra la carpeta del proyecto a Netlify
@@ -142,9 +155,32 @@ vercel deploy
 
 ## 📞 Contacto
 
-- **GitHub**: [tu-usuario](https://github.com/tu-usuario)
-- **LinkedIn**: [tu-perfil](https://linkedin.com/in/tu-perfil)
-- **Email**: tu-email@ejemplo.com
+- **GitHub**: [YeikoD](https://github.com/YeikoD)
+- **Email**: acs20012023@gmail.com
+
+## 🎨 Personalización Avanzada
+
+### Animaciones en JavaScript
+El archivo `script.js` incluye:
+- **Typing effects**: Para hero section y logo
+- **Parallax glow**: Seguimiento de mouse con física
+- **Mobile menu**: Toggle animado con ARIA
+- **Smooth scroll**: Navegación fluida
+- **Intersection Observer**: Animaciones al scroll
+- **Performance utilities**: Throttle y debounce
+
+### Variables CSS Personalizables
+```css
+:root {
+    --primary-color: #0d0e12;      /* Color principal */
+    --secondary-color: #12131a;    /* Color secundario */
+    --accent-color: #00ffcc;       /* Color de acento */
+    --accent-glow: rgba(0, 255, 204, 0.15);
+    --dark-bg: #0a0b10;            /* Fondo oscuro */
+    --text-primary: #e2e8f0;       /* Texto principal */
+    --text-secondary: #94a3b8;     /* Texto secundario */
+}
+```
 
 ## 📄 Licencia
 
@@ -152,10 +188,11 @@ Este proyecto está bajo la Licencia MIT. Siéntete libre de usarlo como base pa
 
 ## 🙏 Agradecimientos
 
-- Diseño inspirado en mejores prácticas de UI/UX
-- Iconos de Font Awesome
-- Fuente de Google Fonts
+- Diseño inspirado en estética tech/cyberpunk moderna
+- Iconos de Font Awesome 6.4
+- Fuentes de Google Fonts (JetBrains Mono, Space Grotesk)
+- Optimizaciones de performance basadas en mejores prácticas web
 
 ---
 
-**Creado con ❤️ para destacar tu trabajo como desarrollador**
+**Creado con ❤️ y optimizado para rendimiento por Anderson Correa**
