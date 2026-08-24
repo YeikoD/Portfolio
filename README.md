@@ -1,4 +1,4 @@
-# Portafolio Personal - Anderson Correa
+# Portafolio Personal
 
 Portafolio web profesional diseñado para showcase de proyectos de desarrollo de software, con enfoque en sistemas de gestión livianos, interfaces de usuario intuitivas y automatización de procesos.
 
@@ -46,8 +46,8 @@ Portfolio/
 
 1. **Clonar el repositorio**:
    ```bash
-   git clone https://github.com/YeikoD/Portfolio.git
-   cd Portfolio
+   git clone https://github.com/tu-usuario/tu-repositorio.git
+   cd tu-repositorio
    ```
 
 2. **Personalizar el contenido**:
@@ -141,7 +141,7 @@ El portafolio está optimizado para todas las resoluciones:
 1. Sube el código a tu repositorio
 2. Ve a Settings > Pages
 3. Selecciona la rama main
-4. Tu portafolio estará disponible en `https://yeikod.github.io/Portfolio`
+4. Tu portafolio estará disponible en `https://tu-usuario.github.io/tu-repositorio`
 
 ### Netlify
 1. Arrastra la carpeta del proyecto a Netlify
@@ -155,8 +155,10 @@ vercel deploy
 
 ## 📞 Contacto
 
-- **GitHub**: [YeikoD](https://github.com/YeikoD)
-- **Email**: acs20012023@gmail.com
+Personaliza esta sección con tus propios enlaces de contacto:
+- GitHub: [tu-usuario](https://github.com/tu-usuario)
+- LinkedIn: [tu-perfil](https://linkedin.com/in/tu-perfil)
+- Email: tu-email@ejemplo.com
 
 ## 🎨 Personalización Avanzada
 
@@ -168,6 +170,8 @@ El archivo `script.js` incluye:
 - **Smooth scroll**: Navegación fluida
 - **Intersection Observer**: Animaciones al scroll
 - **Performance utilities**: Throttle y debounce
+
+Personaliza las frases del typing effect y los colores en las variables CSS según tu preferencia.
 
 ### Variables CSS Personalizables
 ```css
@@ -195,4 +199,4 @@ Este proyecto está bajo la Licencia MIT. Siéntete libre de usarlo como base pa
 
 ---
 
-**Creado con ❤️ y optimizado para rendimiento por Anderson Correa**
+**Creado con ❤️ para destacar tu trabajo como desarrollador**
