@@ -182,3 +182,5 @@ Personaliza las frases del typing effect y los colores en las variables CSS seg�
 ## 📄 Licencia
 
 Este proyecto está bajo la Licencia MIT. Siéntete libre de usarlo como base para tu propio portafolio.
+
+Última actualización: Agosto 2026
