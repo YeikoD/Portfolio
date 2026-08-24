@@ -266,6 +266,13 @@ body {
     }
 }
 
+@media (max-width: 1280px) {
+    .hero-map {
+        width: 65%;
+        max-width: 420px;
+    }
+}
+
 @media (max-width: 1024px) {
     .hero-map {
         width: 60%;
@@ -273,10 +280,24 @@ body {
     }
 }
 
+@media (max-width: 800px) {
+    .hero-map {
+        width: 55%;
+        max-width: 320px;
+    }
+}
+
 @media (max-width: 768px) {
     .hero-map {
         width: 50%;
         max-width: 300px;
+    }
+}
+
+@media (max-width: 600px) {
+    .hero-map {
+        width: 45%;
+        max-width: 260px;
     }
 }
 
