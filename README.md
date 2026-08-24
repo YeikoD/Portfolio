@@ -153,13 +153,6 @@ El portafolio está optimizado para todas las resoluciones:
 vercel deploy
 ```
 
-## 📞 Contacto
-
-Personaliza esta sección con tus propios enlaces de contacto:
-- GitHub: [tu-usuario](https://github.com/tu-usuario)
-- LinkedIn: [tu-perfil](https://linkedin.com/in/tu-perfil)
-- Email: tu-email@ejemplo.com
-
 ## 🎨 Personalización Avanzada
 
 ### Animaciones en JavaScript
@@ -189,14 +182,3 @@ Personaliza las frases del typing effect y los colores en las variables CSS seg�
 ## 📄 Licencia
 
 Este proyecto está bajo la Licencia MIT. Siéntete libre de usarlo como base para tu propio portafolio.
-
-## 🙏 Agradecimientos
-
-- Diseño inspirado en estética tech/cyberpunk moderna
-- Iconos de Font Awesome 6.4
-- Fuentes de Google Fonts (JetBrains Mono, Space Grotesk)
-- Optimizaciones de performance basadas en mejores prácticas web
-
----
-
-**Creado con ❤️ para destacar tu trabajo como desarrollador**
