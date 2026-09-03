@@ -156,7 +156,7 @@ const updateActiveNav = throttle(() => {
         a.setAttribute('aria-current', 'false');
         if (a.getAttribute('href').slice(1) === current) {
             a.style.color = 'var(--accent-color)';
-            a.style.textShadow = '0 0 8px rgba(0, 255, 204, 0.5)';
+            a.style.textShadow = '0 0 8px rgba(230, 57, 70, 0.5)';
             a.setAttribute('aria-current', 'true');
         }
     });
@@ -220,9 +220,9 @@ window.addEventListener('load', () => {
 });
 
 // Console welcome message
-console.log('%c¡Bienvenido a mi portafolio!', 'color: #00ffcc; font-size: 20px; font-weight: bold; text-shadow: 0 0 5px rgba(0, 255, 204, 0.3);');
+console.log('%c¡Bienvenido a mi portafolio!', 'color: #E63946; font-size: 20px; font-weight: bold; text-shadow: 0 0 5px rgba(230, 57, 70, 0.3);');
 console.log('%cDesarrollador enfocado en rendimiento y sistemas de gestión livianos.', 'color: #94a3b8; font-size: 14px;');
-console.log('%cGitHub: https://github.com/YeikoD', 'color: #00ffcc; font-size: 12px;');
+console.log('%cGitHub: https://github.com/YeikoD', 'color: #E63946; font-size: 12px;');
 
 // Typing/deleting loop for the header logo
 const logoText = document.querySelector('.logo h1');
@@ -280,7 +280,7 @@ if (heroSection && canvas) {
     const PROXIMITY_RADIUS = 100;
     const AMBIENT_ALPHA = 0.018;
     const MAX_GLOW_ALPHA = 0.4;
-    const ACCENT_R = 0, ACCENT_G = 255, ACCENT_B = 204;
+    const ACCENT_R = 230, ACCENT_G = 57, ACCENT_B = 70;
 
     function resizeCanvas() {
         const rect = heroSection.getBoundingClientRect();
