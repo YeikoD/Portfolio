@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Hobbies de Anderson Correa - Proyectos personales y experimentos de desarrollo.">
+    <meta name="keywords"
+        content="hobbies, proyectos personales, desarrollo, gta sa, cef, modding">
+    <meta name="author" content="Anderson Correa">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#000000">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://github.com/YeikoD">
+    <meta property="og:title" content="Anderson Correa - Hobbies">
+    <meta property="og:description"
+        content="Proyectos personales y experimentos de desarrollo de Anderson Correa.">
+    <meta property="og:image" content="https://via.placeholder.com/1200x630/000000/E8E6E6?text=Anderson+Correa+Hobbies">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://github.com/YeikoD">
+    <meta property="twitter:title" content="Anderson Correa - Hobbies">
+    <meta property="twitter:description"
+        content="Proyectos personales y experimentos de desarrollo de Anderson Correa.">
+    <meta property="twitter:image" content="https://via.placeholder.com/1200x630/000000/E8E6E6?text=Anderson+Correa+Hobbies">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="assets/logos/logo_icon_32px.ico">
+    <title>Anderson Correa - Hobbies</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        media="print" onload="this.media='all'">
+    <noscript>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    </noscript>
+
+    <!-- Preconnect for performance -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://github.com">
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header" role="banner">
+        <nav class="nav" role="navigation" aria-label="Navegación principal">
+            <div class="logo">
+                <img src="assets/logos/logo_yeiko_v1.png" alt="Logo Yeiko" class="logo-img">
+                <h1>Anderson Correa</h1>
+            </div>
+            <ul class="nav-links" role="menubar">
+                <li role="none"><a href="index.html" role="menuitem">Inicio</a></li>
+                <li role="none"><a href="index.html#proyectos" role="menuitem">Proyectos</a></li>
+                <li role="none"><a href="hobbies.html" role="menuitem" aria-current="page">Juegos Mods</a></li>
+                <li role="none"><a href="index.html#contacto" role="menuitem">Contacto</a></li>
+            </ul>
+            <button class="hamburger" aria-label="Abrir menú de navegación" aria-expanded="false"
+                aria-controls="nav-links">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Hobbies Section -->
+    <section id="hobbies" class="projects" aria-labelledby="hobbies-title">
+        <div class="container">
+            <h2 id="hobbies-title" class="section-title">Juegos Mods</h2>
+
+            <!-- SAWebUI Project -->
+            <article class="project featured" aria-labelledby="hobby-1-title">
+                <div class="project-image">
+                    <img src="assets/screenshots/captura_SAWebUI.png" alt="Captura de interfaz de SAWebUI - Sistema de inventario en GTA San Andreas" loading="lazy">
+                </div>
+                <div class="project-content">
+                    <span class="project-badge hobby-badge">Hobby</span>
+                    <h3 id="hobby-1-title">SAWebUI — Web UI Runtime for GTA San Andreas</h3>
+                    <p class="project-description">
+                        Pionero en integrar una interfaz con tecnología web en GTA SA Singleplayer. Web UI runtime que renderiza HTML/CSS/JS dentro del juego usando CEF (Chromium Embedded Framework) en modo OSR. Expone una API pública para que cualquier mod pueda crear interfaces sin conocer CEF, D3D9 o Win32.
+                    </p>
+                    <div class="tech-specs" aria-label="Tecnologías utilizadas">
+                        <span class="tech-item"><i class="fas fa-code" aria-hidden="true"></i> C++</span>
+                        <span class="tech-item"><i class="fab fa-js" aria-hidden="true"></i> JavaScript</span>
+                        <span class="tech-item"><i class="fab fa-html5" aria-hidden="true"></i> HTML/CSS</span>
+                        <span class="tech-item"><i class="fas fa-gamepad" aria-hidden="true"></i> CEF</span>
+                        <span class="tech-item"><i class="fas fa-plug" aria-hidden="true"></i> CLEO Redux</span>
+                    </div>
+                    <div class="project-features">
+                        <ul aria-label="Características principales">
+                            <li><i class="fas fa-check" aria-hidden="true"></i> CEF OSR (Off-Screen Rendering) para renderizado en juego</li>
+                            <li><i class="fas fa-check" aria-hidden="true"></i> API pública con 9 C exports y 7 CLEO commands</li>
+                            <li><i class="fas fa-check" aria-hidden="true"></i> JS facade para mods CLEO Redux</li>
+                            <li><i class="fas fa-check" aria-hidden="true"></i> Input y hit-testing integrados</li>
+                            <li><i class="fas fa-check" aria-hidden="true"></i> Bridge RenderWare / D3D9 para integración con GTA SA</li>
+                            <li><i class="fas fa-check" aria-hidden="true"></i> JS ↔ native messaging bidireccional</li>
+                            <li><i class="fas fa-check" aria-hidden="true"></i> Multi-UI support para múltiples interfaces simultáneas</li>
+                            <li><i class="fas fa-check" aria-hidden="true"></i> Cursor y keyboard focus management</li>
+                        </ul>
+                    </div>
+                    <div class="project-actions">
+                        <a href="https://github.com/YeikoD/SAWebUI" target="_blank" rel="noopener noreferrer"
+                            class="btn btn-primary" aria-label="Ver código en GitHub">
+                            <i class="fab fa-github" aria-hidden="true"></i> Ver en GitHub
+                        </a>
+                        <a href="https://github.com/YeikoD/SAWebUI" target="_blank" rel="noopener noreferrer"
+                            class="btn btn-secondary" aria-label="Ver documentación">
+                            <i class="fas fa-book" aria-hidden="true"></i> Documentación
+                        </a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- IronSyndicate Project -->
+            <article class="project" aria-labelledby="hobby-2-title">
+                <div class="project-image">
+                    <img src="assets/screenshots/ff4c5e74-fa88-4e6f-bf2b-409743d9ab6b.png" alt="Concept art de Grove Street Iron Syndicate - Sistema de gestión de imperio criminal" loading="lazy">
+                </div>
+                <div class="project-content">
+                    <span class="project-badge hobby-badge">Hobby</span>
+                    <h3 id="hobby-2-title">IronSyndicate — Grove Street Iron Syndicate</h3>
+                    <p class="project-description">
+                        Mod ambicioso de gestión de imperio criminal para GTA San Andreas. "No es solo un mod... es tu imperio." Sistema completo de economía, propiedades, arsenal, flota y mercado dinámico.
+                    </p>
+                    <div class="tech-specs" aria-label="Tecnologías utilizadas">
+                        <span class="tech-item"><i class="fab fa-js" aria-hidden="true"></i> JavaScript</span>
+                        <span class="tech-item"><i class="fab fa-html5" aria-hidden="true"></i> HTML/CSS</span>
+                        <span class="tech-item"><i class="fas fa-plug" aria-hidden="true"></i> CLEO Redux</span>
+                        <span class="tech-item"><i class="fas fa-cogs" aria-hidden="true"></i> ASI Plugin</span>
+                    </div>
+                    <div class="project-features">
+                        <ul aria-label="Características principales">
+                            <li><i class="fas fa-check" aria-hidden="true"></i> Sistema de portafolio financiero con activos y efectivo</li>
+                            <li><i class="fas fa-check" aria-hidden="true"></i> Gestión de propiedades: alquileres, mantenimiento, negocios</li>
+                            <li><i class="fas fa-check" aria-hidden="true"></i> Arsenal completo: compra, venta, munición, inventario</li>
+                            <li><i class="fas fa-check" aria-hidden="true"></i> Flota de vehículos: baúles, mantenimiento, combustible</li>
+                            <li><i class="fas fa-check" aria-hidden="true"></i> Mercado dinámico: oferta, demanda, precios fluctuantes</li>
+                            <li><i class="fas fa-check" aria-hidden="true"></i> Economía dual: dinero limpio y sucio (lavado)</li>
+                            <li><i class="fas fa-check" aria-hidden="true"></i> Sistema de NPCs avanzado con diálogos</li>
+                            <li><i class="fas fa-check" aria-hidden="true"></i> Sistema de riesgo y reputación</li>
+                            <li><i class="fas fa-check" aria-hidden="true"></i> Interfaz web estilo GTA SA Stats Menu</li>
+                        </ul>
+                    </div>
+                    <div class="project-actions">
+                        <button class="btn btn-primary btn-disabled" disabled aria-label="Próximamente">
+                            <i class="fas fa-clock" aria-hidden="true"></i> Próximamente
+                        </button>
+                        <button class="btn btn-secondary btn-info-toggle" data-modal="ironsyndicate-modal" aria-label="Ver información">
+                            <i class="fas fa-info-circle" aria-hidden="true"></i> Info
+                        </button>
+                    </div>
+                </div>
+            </article>
+
+            <!-- STALKER Anomaly Interactive PDA Reports -->
+            <article class="project" aria-labelledby="hobby-3-title">
+                <div class="project-image">
+                    <img src="assets/screenshots/IPDAR_Banner.png" alt="Banner de Interactive PDA Reports para STALKER Anomaly - Interfaz PDA con mensajes" loading="lazy">
+                </div>
+                <div class="project-content">
+                    <span class="project-badge hobby-badge">Hobby</span>
+                    <h3 id="hobby-3-title">Interactive PDA Reports — STALKER Anomaly</h3>
+                    <p class="project-description">
+                        Mod de inmersión para S.T.A.L.K.E.R. Anomaly que hace que tu personaje y los NPCs se comuniquen vía radio a través de la red PDA. Sistema de reportes de loot, respuestas de facciones y recompensas dinámicas.
+                    </p>
+                    <div class="tech-specs" aria-label="Tecnologías utilizadas">
+                        <span class="tech-item"><i class="fas fa-gamepad" aria-hidden="true"></i> X-Ray Engine</span>
+                        <span class="tech-item"><i class="fas fa-code" aria-hidden="true"></i> Lua Scripting</span>
+                        <span class="tech-item"><i class="fas fa-cogs" aria-hidden="true"></i> MCM</span>
+                        <span class="tech-item"><i class="fas fa-language" aria-hidden="true"></i> i18n</span>
+                    </div>
+                    <div class="project-features">
+                        <ul aria-label="Características principales">
+                            <li><i class="fas fa-check" aria-hidden="true"></i> Reportes automáticos de loot según relación con la víctima</li>
+                            <li><i class="fas fa-check" aria-hidden="true"></i> Respuestas de NPCs de la misma facción del fallecido</li>
+                            <li><i class="fas fa-check" aria-hidden="true"></i> Comentarios externos de NPCs de otras facciones</li>
+                            <li><i class="fas fa-check" aria-hidden="true"></i> Factor de ego configurable (porcentaje de reportes)</li>
+                            <li><i class="fas fa-check" aria-hidden="true"></i> Sistema de cooldown entre reportes</li>
+                            <li><i class="fas fa-check" aria-hidden="true"></i> Recompensas de Sidorovich por reportes</li>
+                            <li><i class="fas fa-check" aria-hidden="true"></i> Persistencia de datos entre niveles</li>
+                            <li><i class="fas fa-check" aria-hidden="true"></i> Disponible en español e inglés (detección automática)</li>
+                            <li><i class="fas fa-check" aria-hidden="true"></i> Configuración completa vía MCM</li>
+                        </ul>
+                    </div>
+                    <div class="project-actions">
+                        <a href="https://github.com/YeikoD/STALKER-Anomaly--InteractivePDAReports" target="_blank" rel="noopener noreferrer"
+                            class="btn btn-primary" aria-label="Ver código en GitHub">
+                            <i class="fab fa-github" aria-hidden="true"></i> Ver en GitHub
+                        </a>
+                        <a href="https://www.moddb.com/mods/stalker-anomaly/addons/interactive-pda-reports-esp-eng" target="_blank" rel="noopener noreferrer"
+                            class="btn btn-secondary" aria-label="Más información en ModDB">
+                            <i class="fas fa-info-circle" aria-hidden="true"></i> Más Info
+                        </a>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" role="contentinfo">
+        <div class="container">
+            <p>&copy; 2026 Anderson Dario Correa Silva. Powered By Yeiko.</p>
+            <p class="footer-performance">
+                <i class="fas fa-bolt" aria-hidden="true"></i> Optimizado para rendimiento
+            </p>
+        </div>
+    </footer>
+
+    <!-- Lightbox for image preview -->
+    <div id="lightbox" class="lightbox" role="dialog" aria-hidden="true">
+        <div class="lightbox-content">
+            <button class="lightbox-close" aria-label="Cerrar vista previa">&times;</button>
+            <img id="lightbox-image" src="" alt="Vista previa de imagen">
+        </div>
+    </div>
+
+    <!-- Modal STALKER PDA Reports -->
+    <div id="stalkerpda-modal" class="modal" role="dialog" aria-labelledby="modal-title-2" aria-hidden="true">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modal-title-2" class="modal-title">Interactive PDA Reports</h2>
+                <button class="modal-close" aria-label="Cerrar modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p><strong>Interactive PDA Reports</strong> es un mod de inmersión para S.T.A.L.K.E.R. Anomaly que transforma la forma en que los personajes interactúan a través de la red PDA, creando un sistema de comunicación radiofónica dinámico y contextual.</p>
+
+                <h3>📡 Concepto Principal</h3>
+                <p>El mod hace que tu personaje y los NPCs se comuniquen vía radio a través de la red PDA cuando ocurren eventos importantes como el saqueo de cuerpos, creando una experiencia más inmersiva y social.</p>
+
+                <h3>🎮 Mecánicas de Reporte</h3>
+                <ul>
+                    <li><strong>Reportes automáticos:</strong> Al saquear un cuerpo, tu personaje envía un mensaje a la PDA automáticamente</li>
+                    <li><strong>Texto contextual:</strong> El mensaje cambia según tu relación con el fallecido:
+                        <ul>
+                            <li><em>Amigo (≥400):</em> Lamento por la pérdida de un aliado</li>
+                            <li><em>Neutral (-400 a 400):</em> Reporte genérico de muerte</li>
+                            <li><em>Enemigo (≤-400, no lo mataste):</em> Reporte de enemigo caído</li>
+                            <li><em>Víctima (≤-400, lo mataste):</em> Burla por el asesinato</li>
+                        </ul>
+                    </li>
+                    <li><strong>Respuestas de NPCs:</strong> Si hay stalkers vivos de la misma facción, uno responde vía PDA</li>
+                    <li><strong>Comentarios externos:</strong> NPCs de otras facciones pueden comentar el evento</li>
+                </ul>
+
+                <h3>⚙️ Configuración (MCM)</h3>
+                <ul>
+                    <li><strong>Ego Factor:</strong> Probabilidad de reporte (100% = siempre, 0% = nunca)</li>
+                    <li><strong>Cooldown:</strong> Temporizador entre reportes para evitar spam</li>
+                    <li><strong>Recompensas:</strong> Pagos de Sidorovich por reportes</li>
+                    <li><strong>Demoras:</strong> Tiempo de espera para respuestas de NPCs</li>
+                </ul>
+
+                <h3>💰 Sistema de Recompensas</h3>
+                <ul>
+                    <li>Pagos de Sidorovich vía PDA después de varios reportes</li>
+                    <li>Configurable: cantidad por reporte, cuerpos por pago</li>
+                    <li>Opción de excluir tus propias víctimas</li>
+                </ul>
+
+                <h3>💾 Persistencia</h3>
+                <ul>
+                    <li>Contador de cuerpos y recompensas pendientes se guardan al salir</li>
+                    <li>Se restauran al cargar, incluso entre cambios de nivel</li>
+                </ul>
+
+                <h3>🌍 Idiomas</h3>
+                <ul>
+                    <li>Disponible en español e inglés</li>
+                    <li>Detección automática del idioma del juego</li>
+                </ul>
+
+                <h3>📦 Instalación</h3>
+                <ul>
+                    <li><strong>Mod Organizer 2:</strong> Instalar el .zip o .7z vía "Install a new mod from an archive"</li>
+                    <li><strong>Manual:</strong> Extraer la carpeta gamedata en el directorio raíz de Anomaly</li>
+                    <li>No sobrescribe archivos nativos del juego</li>
+                </ul>
+
+                <p><em>Este mod no sobrescribe ningún archivo nativo del juego y es completamente compatible con otras modificaciones.</em></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal IronSyndicate -->
+    <div id="ironsyndicate-modal" class="modal" role="dialog" aria-labelledby="modal-title" aria-hidden="true">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modal-title" class="modal-title">Grove Street Iron Syndicate</h2>
+                <button class="modal-close" aria-label="Cerrar modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p><strong>IronSyndicate</strong> es un mod ambicioso para GTA San Andreas que transforma el juego en una experiencia de gestión de imperio criminal. "No es solo un mod... es tu imperio."</p>
+
+                <h3>📋 Información General</h3>
+                <ul>
+                    <li><strong>Versión:</strong> 1.0.0</li>
+                    <li><strong>Nombre:</strong> Grove Street Iron Syndicate</li>
+                    <li><strong>Permisos:</strong> Sistema de archivos (fs) y memoria (mem)</li>
+                    <li><strong>Tecnologías:</strong> JavaScript, HTML/CSS, CLEO Redux, ASI Plugin</li>
+                </ul>
+
+                <h3>🎮 Sistemas Principales</h3>
+                <ul>
+                    <li><strong>Portafolio Financiero:</strong> Gestión completa de activos, efectivo, propiedades, vehículos y mercancía en tránsito</li>
+                    <li><strong>Propiedades y Negocios:</strong> Sistema de alquileres, mantenimiento, negocios y lavado de dinero</li>
+                    <li><strong>Arsenal:</strong> Compra, venta, munición e inventario de armas</li>
+                    <li><strong>Flota:</strong> Gestión de vehículos, baúles, mantenimiento y combustible</li>
+                    <li><strong>Mercado Dinámico:</strong> Sistema de oferta, demanda, precios fluctuantes, proveedores y compradores</li>
+                </ul>
+
+                <h3>💰 Economía</h3>
+                <ul>
+                    <li><strong>Dinero Dual:</strong> Sistema de dinero limpio y sucio con mecánicas de lavado</li>
+                    <li><strong>Economía Dinámica:</strong> Precios que fluctúan según oferta y demanda</li>
+                    <li><strong>Riesgo y Reputación:</strong> Sistema de consecuencias por tus acciones criminales</li>
+                </ul>
+
+                <h3>🤖 NPCs y Diálogos</h3>
+                <ul>
+                    <li>Sistema avanzado de NPCs con diálogos interactivos</li>
+                    <li>Interacciones complejas con el mundo del juego</li>
+                    <li>Misiones y eventos dinámicos</li>
+                </ul>
+
+                <h3>🎨 Interfaz</h3>
+                <ul>
+                    <li>Interfaz web estilo GTA SA Stats Menu</li>
+                    <li>Diseño responsivo y accesible</li>
+                    <li>Integración perfecta con el gameplay original</li>
+                </ul>
+
+                <p><em>Este mod está en desarrollo activo. Los sistemas mostrados en el concept art representan la visión completa del proyecto.</em></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js" defer></script>
+    <script>
+        // Lightbox functionality for image preview
+        document.addEventListener('DOMContentLoaded', function() {
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImage = document.getElementById('lightbox-image');
+            const lightboxClose = document.querySelector('.lightbox-close');
+            const projectImages = document.querySelectorAll('.project-image img');
+
+            // Open lightbox when clicking on project images
+            projectImages.forEach(img => {
+                img.addEventListener('click', function() {
+                    lightboxImage.src = this.src;
+                    lightboxImage.alt = this.alt;
+                    lightbox.classList.add('active');
+                    lightbox.setAttribute('aria-hidden', 'false');
+                    document.body.style.overflow = 'hidden';
+                });
+            });
+
+            // Close lightbox functions
+            function closeLightbox() {
+                lightbox.classList.remove('active');
+                lightbox.setAttribute('aria-hidden', 'true');
+                document.body.style.overflow = '';
+                setTimeout(() => {
+                    lightboxImage.src = '';
+                }, 300);
+            }
+
+            lightboxClose.addEventListener('click', closeLightbox);
+
+            lightbox.addEventListener('click', function(e) {
+                if (e.target === lightbox) {
+                    closeLightbox();
+                }
+            });
+
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+                    closeLightbox();
+                }
+            });
+        });
+
+        // Modal functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const modalButtons = document.querySelectorAll('.btn-info-toggle');
+            const closeButtons = document.querySelectorAll('.modal-close');
+            const modals = document.querySelectorAll('.modal');
+
+            modalButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const modalId = this.getAttribute('data-modal');
+                    const modal = document.getElementById(modalId);
+                    if (modal) {
+                        modal.classList.add('active');
+                        modal.setAttribute('aria-hidden', 'false');
+                        document.body.style.overflow = 'hidden';
+                    }
+                });
+            });
+
+            closeButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const modal = this.closest('.modal');
+                    if (modal) {
+                        modal.classList.remove('active');
+                        modal.setAttribute('aria-hidden', 'true');
+                        document.body.style.overflow = '';
+                    }
+                });
+            });
+
+            modals.forEach(modal => {
+                modal.addEventListener('click', function(e) {
+                    if (e.target === modal) {
+                        modal.classList.remove('active');
+                        modal.setAttribute('aria-hidden', 'true');
+                        document.body.style.overflow = '';
+                    }
+                });
+            });
+
+            // Close on Escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    modals.forEach(modal => {
+                        if (modal.classList.contains('active')) {
+                            modal.classList.remove('active');
+                            modal.setAttribute('aria-hidden', 'true');
+                            document.body.style.overflow = '';
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

@@ -58,6 +58,7 @@
             <ul class="nav-links" role="menubar">
                 <li role="none"><a href="#inicio" role="menuitem" aria-current="page">Inicio</a></li>
                 <li role="none"><a href="#proyectos" role="menuitem">Proyectos</a></li>
+                <li role="none"><a href="hobbies.html" role="menuitem">Juegos Mods</a></li>
                 <li role="none"><a href="#contacto" role="menuitem">Contacto</a></li>
             </ul>
             <button class="hamburger" aria-label="Abrir menú de navegación" aria-expanded="false"
@@ -237,7 +238,59 @@
         </div>
     </footer>
 
+    <!-- Lightbox for image preview -->
+    <div id="lightbox" class="lightbox" role="dialog" aria-hidden="true">
+        <div class="lightbox-content">
+            <button class="lightbox-close" aria-label="Cerrar vista previa">&times;</button>
+            <img id="lightbox-image" src="" alt="Vista previa de imagen">
+        </div>
+    </div>
+
     <script src="script.js" defer></script>
+    <script>
+        // Lightbox functionality for image preview
+        document.addEventListener('DOMContentLoaded', function() {
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImage = document.getElementById('lightbox-image');
+            const lightboxClose = document.querySelector('.lightbox-close');
+            const projectImages = document.querySelectorAll('.project-image img');
+
+            // Open lightbox when clicking on project images
+            projectImages.forEach(img => {
+                img.addEventListener('click', function() {
+                    lightboxImage.src = this.src;
+                    lightboxImage.alt = this.alt;
+                    lightbox.classList.add('active');
+                    lightbox.setAttribute('aria-hidden', 'false');
+                    document.body.style.overflow = 'hidden';
+                });
+            });
+
+            // Close lightbox functions
+            function closeLightbox() {
+                lightbox.classList.remove('active');
+                lightbox.setAttribute('aria-hidden', 'true');
+                document.body.style.overflow = '';
+                setTimeout(() => {
+                    lightboxImage.src = '';
+                }, 300);
+            }
+
+            lightboxClose.addEventListener('click', closeLightbox);
+
+            lightbox.addEventListener('click', function(e) {
+                if (e.target === lightbox) {
+                    closeLightbox();
+                }
+            });
+
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+                    closeLightbox();
+                }
+            });
+        });
+    </script>
 </body>
 
 </html>
