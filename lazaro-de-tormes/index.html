@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>El buldero — Lazarillo de Tormes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a0806;
+    --parch:#f1e6cf;
+    --parch-dim:#cbb996;
+    --muted:#a5947a;
+    --gold:#c9a227;
+    --gold-2:#e8c979;
+    --line:rgba(201,162,39,.26);
+    --serif:'Cormorant Garamond','Palatino Linotype',Palatino,Georgia,serif;
+    --display:'Cinzel','Trajan Pro','Palatino Linotype',Georgia,serif;
+  }
+
+  *,*::before,*::after{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;
+    overflow:hidden;
+    background:var(--bg);
+    color:var(--parch);
+    font-family:var(--serif);
+    font-size:16px;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+  }
+  button{font:inherit;color:inherit}
+  :focus-visible{outline:2px solid var(--gold-2);outline-offset:3px}
+  ::selection{background:rgba(201,162,39,.35);color:#fff}
+
+  /* ---------- capas decorativas ---------- */
+  .shade-top,.shade-bottom{
+    position:fixed;left:0;right:0;z-index:14;pointer-events:none;
+  }
+  .shade-top{top:0;height:150px;background:linear-gradient(180deg,rgba(6,5,4,.92),rgba(6,5,4,.4) 48%,transparent)}
+  .shade-bottom{bottom:0;height:190px;background:linear-gradient(0deg,rgba(6,5,4,.94),rgba(6,5,4,.4) 50%,transparent)}
+
+  .grain{
+    position:fixed;inset:0;z-index:12;pointer-events:none;opacity:.05;mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* ---------- barra de progreso ---------- */
+  .progress{position:fixed;top:0;left:0;right:0;height:2px;z-index:30;background:rgba(255,255,255,.06)}
+  .progress__fill{
+    height:100%;width:4.2%;
+    background:linear-gradient(90deg,#8f6f1c,var(--gold-2));
+    box-shadow:0 0 14px rgba(232,201,121,.55);
+    transition:width .7s cubic-bezier(.2,.7,.2,1);
+  }
+
+  /* ---------- cabecera ---------- */
+  .topbar{
+    position:fixed;top:0;left:0;right:0;z-index:25;
+    display:flex;align-items:center;justify-content:space-between;gap:18px;
+    padding:18px clamp(18px,4vw,46px) 14px;
+  }
+  .brand{
+    display:inline-flex;align-items:baseline;gap:10px;
+    background:none;border:0;padding:0;cursor:pointer;
+    font-family:var(--display);font-size:.66rem;letter-spacing:.26em;text-transform:uppercase;
+    color:rgba(241,230,207,.72);transition:color .3s;
+  }
+  .brand:hover{color:var(--parch)}
+  .brand em{font-style:normal;color:var(--gold)}
+  .brand span{color:rgba(201,162,39,.55)}
+
+  .credit{
+    display:flex;flex-direction:column;align-items:flex-end;gap:4px;
+    opacity:0;visibility:hidden;transform:translateY(-6px);
+    transition:opacity .5s ease,transform .5s ease,visibility 0s linear .5s;
+  }
+  body.is-cover .credit{
+    opacity:1;visibility:visible;transform:none;
+    transition:opacity .6s ease .25s,transform .6s ease .25s,visibility 0s;
+  }
+  .credit__label{
+    font-family:var(--display);font-size:.58rem;letter-spacing:.18em;
+    text-transform:uppercase;color:rgba(241,230,207,.55);white-space:nowrap;
+  }
+  .credit__link{
+    padding:2px 6px;font-size:.46rem;letter-spacing:.06em;gap:3px;
+    color:var(--gold-2);border-color:rgba(232,201,121,.45);
+    background:rgba(201,162,39,.08);text-decoration:none;white-space:nowrap;
+  }
+  .credit__link:hover{
+    color:#fff3d0;border-color:var(--gold-2);
+    background:rgba(201,162,39,.18);
+  }
+  .credit__link svg{display:block;width:7px;height:7px}
+
+  .btn{
+    display:inline-flex;align-items:center;gap:9px;
+    padding:8px 14px;border-radius:999px;
+    border:1px solid var(--line);background:rgba(12,10,7,.55);
+    color:rgba(241,230,207,.8);
+    font-family:var(--display);font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;
+    cursor:pointer;backdrop-filter:blur(8px);text-decoration:none;
+    transition:border-color .3s,background .3s,color .3s,transform .3s;
+  }
+  .btn:hover{border-color:rgba(232,201,121,.6);color:#fff8e6;background:rgba(201,162,39,.1)}
+  .btn:active{transform:scale(.97)}
+  .btn--gold{
+    border-color:rgba(232,201,121,.55);color:#fff5dd;
+    background:linear-gradient(180deg,rgba(201,162,39,.22),rgba(201,162,39,.08));
+    padding:12px 22px;font-size:.66rem;
+  }
+  .btn--gold:hover{background:linear-gradient(180deg,rgba(201,162,39,.34),rgba(201,162,39,.14))}
+
+  /* ---------- pie ---------- */
+  .dock{
+    position:fixed;left:0;right:0;bottom:0;z-index:25;
+    display:flex;align-items:center;justify-content:space-between;gap:18px;
+    padding:16px clamp(18px,4vw,46px) clamp(16px,3vh,26px);
+  }
+  .hint{margin:0;font-size:.8rem;letter-spacing:.05em;color:rgba(241,230,207,.42);white-space:nowrap}
+  kbd{
+    display:inline-block;min-width:22px;text-align:center;padding:2px 6px;margin:0 2px;
+    border:1px solid rgba(241,230,207,.22);border-radius:4px;background:rgba(241,230,207,.05);
+    font-family:var(--display);font-size:.62rem;color:rgba(241,230,207,.7);
+  }
+  .arr{display:inline-block;width:11px;height:11px;vertical-align:-1px}
+  .dots{position:absolute;left:50%;transform:translateX(-50%);display:flex;align-items:center;justify-content:center;gap:6px}
+  .dot{
+    width:12px;height:3px;padding:0;border:0;border-radius:2px;
+    background:rgba(241,230,207,.2);cursor:pointer;
+    transition:width .35s,background .35s,box-shadow .35s;
+  }
+  .dot:hover{background:rgba(241,230,207,.5)}
+  .dot.is-active{width:26px;background:linear-gradient(90deg,var(--gold),var(--gold-2));box-shadow:0 0 12px rgba(201,162,39,.5)}
+  .dock__nav{display:flex;align-items:center;gap:12px;margin-left:auto}
+  .counter{
+    display:inline-flex;align-items:baseline;gap:5px;
+    font-family:var(--display);font-size:.68rem;letter-spacing:.18em;
+    color:rgba(241,230,207,.42);font-variant-numeric:tabular-nums;
+  }
+  .counter b{color:var(--gold-2);font-weight:500;font-size:.8rem}
+  .navbtn{
+    width:44px;height:44px;border-radius:50%;
+    border:1px solid var(--line);background:rgba(14,11,8,.6);
+    display:grid;place-items:center;cursor:pointer;
+    color:var(--parch);backdrop-filter:blur(8px);
+    transition:border-color .3s,background .3s,color .3s,transform .3s,opacity .3s;
+  }
+  .navbtn svg{display:block;width:20px;height:20px}
+  .navbtn:hover:not(:disabled){border-color:var(--gold);background:rgba(201,162,39,.12);color:#fff}
+  .navbtn:active:not(:disabled){transform:scale(.94)}
+  .navbtn:disabled{opacity:.22;cursor:default}
+
+  /* ---------- diapositivas ---------- */
+  .deck{position:fixed;inset:0;z-index:2}
+  .slide{
+    position:absolute;inset:0;
+    overflow-y:auto;overflow-x:hidden;
+    padding:clamp(76px,11vh,116px) clamp(20px,5.5vw,84px) clamp(86px,12vh,116px);
+    opacity:0;visibility:hidden;transform:translate3d(0,26px,0) scale(.995);
+    transition:opacity .75s ease,transform 1s cubic-bezier(.2,.7,.2,1),visibility 0s linear .8s;
+    background:
+      radial-gradient(1200px 800px at 12% -8%,rgba(201,162,39,.10),transparent 62%),
+      radial-gradient(1000px 700px at 105% 108%,rgba(122,62,24,.16),transparent 62%),
+      linear-gradient(180deg,#0b0907,#100c08 55%,#080605);
+    scrollbar-width:thin;scrollbar-color:rgba(201,162,39,.35) transparent;
+  }
+  .slide::-webkit-scrollbar{width:6px}
+  .slide::-webkit-scrollbar-thumb{background:rgba(201,162,39,.3);border-radius:3px}
+  .slide.is-active{
+    opacity:1;visibility:visible;transform:none;z-index:3;
+    transition:opacity .9s ease .06s,transform 1.05s cubic-bezier(.2,.7,.2,1) .06s,visibility 0s;
+  }
+
+  .scene{
+    min-height:100%;max-width:1380px;margin:0 auto;
+    display:flex;flex-direction:column;justify-content:center;
+    gap:clamp(20px,3.2vh,38px);
+  }
+  .scene--solo{max-width:900px}
+  .scene--solo .head{display:flex;flex-direction:column;align-items:center;text-align:center}
+  .scene--solo .kicker{justify-content:center}
+  .scene--solo .kicker::after{content:"";width:34px;height:1px;background:linear-gradient(270deg,transparent,var(--gold))}
+  .scene--solo .copy{position:relative;max-width:64ch;margin:0 auto;padding-left:clamp(16px,3vw,32px)}
+  .scene--solo .copy::before{
+    content:"";position:absolute;left:0;top:8px;bottom:8px;width:1px;
+    background:linear-gradient(180deg,transparent,rgba(201,162,39,.55),transparent);
+  }
+
+  /* animación de entrada de los bloques */
+  .reveal{opacity:0;transform:translateY(20px);transition:opacity .75s ease,transform .85s cubic-bezier(.2,.7,.2,1)}
+  .slide.is-active .reveal{opacity:1;transform:none;transition-delay:calc(.14s + var(--i,0)*.1s)}
+
+  .kicker{
+    display:flex;align-items:center;gap:14px;margin:0 0 12px;
+    font-family:var(--display);font-weight:600;font-size:.68rem;
+    letter-spacing:.34em;text-transform:uppercase;color:var(--gold);
+  }
+  .kicker::before{content:"";width:34px;height:1px;background:linear-gradient(90deg,transparent,var(--gold))}
+
+  .title{
+    margin:0;font-family:var(--display);font-weight:500;
+    font-size:clamp(1.7rem,3.3vw,2.95rem);line-height:1.14;letter-spacing:.012em;
+    color:#f8f0dd;text-wrap:balance;
+  }
+
+  .copy{min-width:0}
+  .narration{
+    margin:0;font-size:clamp(1.05rem,.55vw + .92rem,1.4rem);line-height:1.78;
+    color:#e8dbc2;text-wrap:pretty;
+  }
+  .narration::first-letter{color:var(--gold-2)}
+  .narration + .narration{margin-top:1.05em}
+  .scene--dense .narration{font-size:clamp(1rem,.42vw + .9rem,1.24rem);line-height:1.72}
+
+  .rule{
+    display:flex;align-items:center;justify-content:center;gap:14px;
+    width:min(340px,70%);margin:4px auto;color:var(--gold);
+  }
+  .rule span{height:1px;flex:1;background:linear-gradient(90deg,transparent,rgba(201,162,39,.55))}
+  .rule span:last-child{background:linear-gradient(270deg,transparent,rgba(201,162,39,.55))}
+  .rule i{font-style:normal;font-size:.78rem;letter-spacing:.3em}
+
+  /* ---------- diapositiva de vídeo a pantalla completa ---------- */
+  .slide--video{padding:0;background:#000;overflow:hidden}
+  .stage{position:absolute;inset:0;margin:0;background:#000}
+  .stage video,.stage img{display:block;width:100%;height:100%;object-fit:cover;background:#000}
+  .stage::after{
+    content:"";position:absolute;inset:0;pointer-events:none;
+    background:
+      linear-gradient(180deg,rgba(0,0,0,.45) 0%,rgba(0,0,0,0) 20%,rgba(0,0,0,0) 62%,rgba(0,0,0,.55) 100%);
+    box-shadow:inset 0 0 160px rgba(0,0,0,.45);
+  }
+  .stage__caption{
+    position:absolute;z-index:2;
+    left:clamp(24px,5.5vw,84px);bottom:clamp(96px,14vh,124px);
+    display:flex;flex-direction:column;gap:7px;
+    text-shadow:0 2px 18px rgba(0,0,0,.65);
+  }
+  .stage__caption::before{
+    content:"";width:36px;height:1px;margin-bottom:2px;
+    background:linear-gradient(90deg,var(--gold),transparent);
+  }
+  .stage__kicker{
+    font-family:var(--display);font-size:.6rem;letter-spacing:.32em;
+    text-transform:uppercase;color:var(--gold-2);
+  }
+  .stage__title{
+    font-family:var(--display);font-size:clamp(1.1rem,2vw,1.7rem);font-weight:500;
+    letter-spacing:.02em;color:#f8f0dd;
+  }
+
+  /* ---------- portada ---------- */
+  .slide--cover{padding-top:clamp(80px,12vh,130px)}
+  .slide--cover::before{
+    content:"V";position:absolute;top:50%;left:50%;transform:translate(-50%,-53%);
+    font-family:var(--display);font-size:min(70vh,54vw);line-height:.8;
+    color:transparent;-webkit-text-stroke:1px rgba(201,162,39,.06);
+    pointer-events:none;user-select:none;
+  }
+  .cover{
+    position:relative;z-index:1;min-height:100%;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    text-align:center;gap:clamp(16px,2.6vh,26px);
+  }
+  .cover__eyebrow{
+    margin:0;font-family:var(--display);font-size:.66rem;letter-spacing:.44em;
+    text-transform:uppercase;color:var(--gold);
+  }
+  .cover__title{
+    margin:0;font-family:var(--display);font-weight:500;text-transform:uppercase;
+    font-size:clamp(2.8rem,9.5vw,7.2rem);line-height:1;letter-spacing:.14em;
+    background:linear-gradient(180deg,#fdf6e4 8%,#e3c987 52%,#a17f2f 100%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    filter:drop-shadow(0 10px 30px rgba(0,0,0,.55));
+    padding-left:.14em;
+  }
+  .cover__sub{
+    margin:0;font-size:clamp(1.05rem,1.5vw,1.35rem);font-style:italic;
+    color:var(--parch-dim);letter-spacing:.02em;
+  }
+  .cover__meta{
+    margin:0;font-family:var(--display);font-size:.6rem;letter-spacing:.3em;
+    text-transform:uppercase;color:rgba(241,230,207,.42);
+  }
+
+  /* ---------- final ---------- */
+  .end__title{
+    margin:0;font-family:var(--display);font-weight:500;text-transform:uppercase;
+    font-size:clamp(3rem,8vw,6rem);line-height:1;letter-spacing:.2em;
+    color:#f8f0dd;padding-left:.2em;
+  }
+  .end__text{margin:0;font-size:clamp(1.1rem,1.4vw,1.3rem);font-style:italic;color:var(--parch-dim);text-align:center;max-width:44ch}
+  .end__text strong{font-style:normal;font-weight:500;color:var(--gold-2)}
+  .end__layout{
+    position:relative;min-height:100%;
+    display:flex;flex-direction:column;justify-content:center;
+  }
+  .slide--end .scene{
+    min-height:0;width:100%;align-items:center;text-align:center;
+  }
+  .end__credit{
+    position:absolute;top:clamp(-62px,-6.2vh,-30px);right:clamp(-54px,-3.2vw,-9px);z-index:2;
+    display:flex;flex-direction:column;align-items:flex-end;gap:2px;
+    padding-right:14px;border-right:1px solid rgba(201,162,39,.35);
+    text-align:right;
+  }
+  .end__credit-eyebrow{
+    margin:0 0 4px;font-family:var(--display);font-size:.58rem;
+    letter-spacing:.28em;text-transform:uppercase;color:rgba(241,230,207,.38);
+  }
+  .end__credit-name{
+    margin:0;font-family:var(--display);font-size:.76rem;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--gold-2);
+  }
+  .end__credit-line{
+    margin:0;font-size:.86rem;line-height:1.5;color:rgba(241,230,207,.55);
+  }
+  .end__credit-date{
+    margin:7px 0 0;font-family:var(--display);font-size:.52rem;
+    letter-spacing:.16em;text-transform:uppercase;color:rgba(241,230,207,.32);
+  }
+  .end__actions{
+    display:flex;flex-direction:column;align-items:center;gap:10px;
+  }
+  .end__actions .btn{white-space:nowrap}
+  .end__actions .btn svg{display:block;width:12px;height:12px}
+
+  /* ---------- adaptación ---------- */
+  @media (max-width:1180px){
+    .hint{display:none}
+  }
+  @media (max-width:980px){
+    .brand span,.brand em{display:none}
+    .topbar{padding:14px 18px 10px}
+    .dock{padding:12px 18px 16px;gap:10px}
+    .dots{gap:5px}
+    .dot{width:9px}
+    .dot.is-active{width:20px}
+    .stage__caption{bottom:110px}
+  }
+  @media (max-width:860px){
+    .dots{display:none}
+  }
+  @media (max-width:620px){
+    .slide{padding:74px 20px 84px}
+    .title{font-size:clamp(1.5rem,6vw,2rem)}
+    .narration{font-size:1.04rem;line-height:1.68}
+    .btn{padding:7px 10px;letter-spacing:.14em;font-size:.55rem}
+    .navbtn{width:40px;height:40px}
+    .stage__caption{left:20px;bottom:104px}
+    .stage__title{font-size:1.05rem}
+    .credit{gap:4px}
+    .credit__label{font-size:.5rem;letter-spacing:.1em}
+    .credit__link{padding:2px 6px;font-size:.46rem;letter-spacing:.06em}
+    .end__credit-name{font-size:.7rem}
+    .end__credit-line{font-size:.82rem}
+  }
+  @media (max-width:520px){
+    .brand{font-size:.5rem;letter-spacing:.12em;gap:6px}
+    .topbar{padding:12px 14px 8px;gap:10px}
+    .credit{gap:4px}
+    .credit__label{font-size:.45rem;letter-spacing:.06em}
+    .credit__link{padding:2px 5px;font-size:.43rem;letter-spacing:.05em;gap:2px}
+    .credit__link svg{width:7px;height:7px}
+  }
+  @media (orientation:portrait){
+    .stage video,.stage img{object-fit:contain}
+  }
+  @media (max-height:820px) and (min-width:981px){
+    .slide{padding-top:78px;padding-bottom:82px}
+    .scene{gap:16px}
+    .narration{font-size:1.05rem;line-height:1.66}
+    .scene--dense .narration{font-size:.98rem;line-height:1.56}
+    .title{font-size:clamp(1.45rem,2.6vw,2.25rem)}
+    .cover__title{font-size:clamp(2.6rem,8vw,5.4rem)}
+    .stage__caption{bottom:92px}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .slide,.reveal,.progress__fill,.btn,.navbtn{transition-duration:.01ms !important;transition-delay:0s !important}
+    .slide{transform:none}
+  }
+</style>
+</head>
+<body class="is-cover">
+
+<div class="progress" aria-hidden="true"><div class="progress__fill" id="progressFill"></div></div>
+<div class="grain" aria-hidden="true"></div>
+<div class="shade-top" aria-hidden="true"></div>
+<div class="shade-bottom" aria-hidden="true"></div>
+
+<header class="topbar">
+  <button class="brand" id="brandBtn" aria-label="Volver a la portada">
+    Lazarillo de Tormes <span>·</span> <em>Tratado V</em>
+  </button>
+  <div class="credit">
+    <span class="credit__label">Por Anderson Correa</span>
+    <a class="btn credit__link" href="https://yeikod.github.io/Portfolio/" target="_blank" rel="noopener noreferrer" aria-label="Ver los proyectos de Anderson Correa en una pestaña nueva">
+      Ver Proyectos
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg>
+    </a>
+  </div>
+</header>
+
+<main class="deck" id="deck">
+
+  <!-- 1 · PORTADA -->
+  <section class="slide slide--cover is-active" aria-roledescription="diapositiva" aria-label="Portada">
+    <div class="cover">
+      <p class="cover__eyebrow reveal" style="--i:0">La vida de Lazarillo de Tormes</p>
+      <h1 class="cover__title reveal" style="--i:1">El buldero</h1>
+      <div class="rule reveal" style="--i:2" aria-hidden="true"><span></span><i>✦</i><span></span></div>
+      <p class="cover__sub reveal" style="--i:3">Tratado quinto · Narración y presentación</p>
+      <p class="cover__meta reveal" style="--i:4">Parcial de Literatura 4to</p>
+    </div>
+  </section>
+
+  <!-- 2 · TEXTO TOMA 1 -->
+  <section class="slide" aria-roledescription="diapositiva" aria-label="Narración de la toma 1">
+    <div class="scene scene--solo">
+      <header class="head reveal" style="--i:0">
+        <p class="kicker">Tratado Quinto · Parte 1</p>
+        <h2 class="title">La llegada al pueblo</h2>
+        <div class="rule" style="margin-top:14px" aria-hidden="true"><span></span><i>✦</i><span></span></div>
+      </header>
+      <div class="copy reveal" style="--i:1">
+        <p class="narration">«En esta ocasión, la fortuna me llevó a servir a un buldero, hombre muy astuto y desenvuelto, que siempre encontraba ingeniosas maneras de vender sus bulas. Al llegar a los pueblos, procuraba ganarse primero el favor de los clérigos, para que estos ayudasen a su negocio».</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 · VÍDEO TOMA 1 -->
+  <section class="slide slide--video" aria-roledescription="diapositiva" aria-label="Toma 1 en vídeo: la llegada al pueblo">
+    <figure class="stage">
+      <video src="assets/toma_1.mp4" playsinline preload="metadata" aria-label="Toma 1: llegada del buldero al pueblo"></video>
+      <figcaption class="stage__caption">
+        <span class="stage__kicker">Toma 1</span>
+        <span class="stage__title">La llegada al pueblo</span>
+      </figcaption>
+    </figure>
+  </section>
+
+  <!-- 4 · TEXTO TOMAS 2 -->
+  <section class="slide" aria-roledescription="diapositiva" aria-label="Narración de las tomas 2-1 y 2-2">
+    <div class="scene scene--solo">
+      <header class="head reveal" style="--i:0">
+        <p class="kicker">Tratado Quinto · Partes 2-1 y 2-2</p>
+        <h2 class="title">El regalo al cura y la conversación</h2>
+        <div class="rule" style="margin-top:14px" aria-hidden="true"><span></span><i>✦</i><span></span></div>
+      </header>
+      <div class="copy reveal" style="--i:1">
+        <p class="narration">«Así, nada más llegar, ofrecía a los curas pequeños presentes, como frutas de temporada. Con estas atenciones buscaba tenerlos de su parte, para que llamasen a sus feligreses y los animasen a tomar las bulas».</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 · VÍDEO TOMA 2-1 -->
+  <section class="slide slide--video" aria-roledescription="diapositiva" aria-label="Toma 2-1 en vídeo: el regalo al cura">
+    <figure class="stage">
+      <video src="assets/toma_2_1.mp4" playsinline preload="metadata" aria-label="Toma 2-1: el regalo al cura"></video>
+      <figcaption class="stage__caption">
+        <span class="stage__kicker">Toma 2-1</span>
+        <span class="stage__title">El regalo al cura</span>
+      </figcaption>
+    </figure>
+  </section>
+
+  <!-- 6 · VÍDEO TOMA 2-2 -->
+  <section class="slide slide--video" aria-roledescription="diapositiva" aria-label="Toma 2-2 en vídeo: la conversación">
+    <figure class="stage">
+      <video src="assets/toma_2_2.mp4" playsinline preload="metadata" aria-label="Toma 2-2: la conversación"></video>
+      <figcaption class="stage__caption">
+        <span class="stage__kicker">Toma 2-2</span>
+        <span class="stage__title">La conversación</span>
+      </figcaption>
+    </figure>
+  </section>
+
+  <!-- 7 · TEXTO TOMA 3 -->
+  <section class="slide" aria-roledescription="diapositiva" aria-label="Narración de la toma 3">
+    <div class="scene scene--solo">
+      <header class="head reveal" style="--i:0">
+        <p class="kicker">Tratado Quinto · Parte 3</p>
+        <h2 class="title">El buldero no consigue vender</h2>
+        <div class="rule" style="margin-top:14px" aria-hidden="true"><span></span><i>✦</i><span></span></div>
+      </header>
+      <div class="copy reveal" style="--i:1">
+        <p class="narration">«Mas, aunque empleaba todas sus habilidades y predicaba durante varios días, en aquel lugar nadie parecía dispuesto a comprar sus bulas. Viendo que por las buenas no conseguía su propósito, mi amo comenzó a pensar en otras maneras de alcanzar su objetivo».</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8 · VÍDEO TOMA 3 -->
+  <section class="slide slide--video" aria-roledescription="diapositiva" aria-label="Toma 3 en vídeo: el buldero no consigue vender">
+    <figure class="stage">
+      <video src="assets/toma_3.mp4" playsinline preload="metadata" aria-label="Toma 3: el buldero predica sin éxito"></video>
+      <figcaption class="stage__caption">
+        <span class="stage__kicker">Toma 3</span>
+        <span class="stage__title">El buldero no consigue vender</span>
+      </figcaption>
+    </figure>
+  </section>
+
+  <!-- 9 · TEXTO TOMA 4-1 -->
+  <section class="slide" aria-roledescription="diapositiva" aria-label="Narración de la toma 4-1">
+    <div class="scene scene--solo">
+      <header class="head reveal" style="--i:0">
+        <p class="kicker">Tratado Quinto · Parte 4-1</p>
+        <h2 class="title">El acuerdo con el alguacil</h2>
+        <div class="rule" style="margin-top:14px" aria-hidden="true"><span></span><i>✦</i><span></span></div>
+      </header>
+      <div class="copy reveal" style="--i:1">
+        <p class="narration">«Aquella noche, después de cenar, mi amo y el alguacil se pusieron a jugar a la colación. Y, como después pude comprender, ambos habían preparado una astuta invención para engañar a los vecinos y conseguir que comprasen las bulas».</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10 · VÍDEO TOMA 4-1 -->
+  <section class="slide slide--video" aria-roledescription="diapositiva" aria-label="Toma 4-1 en vídeo: el acuerdo con el alguacil">
+    <figure class="stage">
+      <video src="assets/toma_4_1.mp4" playsinline preload="metadata" aria-label="Toma 4-1: el acuerdo con el alguacil"></video>
+      <figcaption class="stage__caption">
+        <span class="stage__kicker">Toma 4-1</span>
+        <span class="stage__title">El acuerdo con el alguacil</span>
+      </figcaption>
+    </figure>
+  </section>
+
+  <!-- 11 · TEXTO TOMA 4-2 -->
+  <section class="slide" aria-roledescription="diapositiva" aria-label="Narración de la toma 4-2">
+    <div class="scene scene--solo">
+      <header class="head reveal" style="--i:0">
+        <p class="kicker">Tratado Quinto · Parte 4-2</p>
+        <h2 class="title">El enfrentamiento en la taberna</h2>
+        <div class="rule" style="margin-top:14px" aria-hidden="true"><span></span><i>✦</i><span></span></div>
+      </header>
+      <div class="copy reveal" style="--i:1">
+        <p class="narration">«Durante el juego comenzaron a reñir y a decirse malas palabras. Mi amo llamó ladrón al alguacil, y este lo acusó de falsario, asegurando que las bulas que predicaba eran falsas. La disputa creció de tal manera que ambos llegaron a echar mano a sus armas. Los huéspedes y vecinos tuvieron que intervenir para impedir que se matasen».</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 12 · VÍDEO TOMA 4-2 -->
+  <section class="slide slide--video" aria-roledescription="diapositiva" aria-label="Toma 4-2 en vídeo: el enfrentamiento en la taberna">
+    <figure class="stage">
+      <video src="assets/toma_4_2.mp4" playsinline preload="metadata" aria-label="Toma 4-2: la disputa entre el buldero y el alguacil"></video>
+      <figcaption class="stage__caption">
+        <span class="stage__kicker">Toma 4-2</span>
+        <span class="stage__title">El enfrentamiento en la taberna</span>
+      </figcaption>
+    </figure>
+  </section>
+
+  <!-- 13 · TEXTO TOMA 4-3 -->
+  <section class="slide" aria-roledescription="diapositiva" aria-label="Narración de la toma 4-3">
+    <div class="scene scene--solo">
+      <header class="head reveal" style="--i:0">
+        <p class="kicker">Tratado Quinto · Parte 4-3</p>
+        <h2 class="title">La calma después de la pelea</h2>
+        <div class="rule" style="margin-top:14px" aria-hidden="true"><span></span><i>✦</i><span></span></div>
+      </header>
+      <div class="copy reveal" style="--i:1">
+        <p class="narration">«Finalmente, los vecinos apartaron al alguacil y consiguieron llevarlo a otro lugar. Mi amo quedó muy enojado y, después de que le rogasen que olvidase el asunto, todos nos fuimos a dormir».</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 14 · VÍDEO TOMA 4-3 -->
+  <section class="slide slide--video" aria-roledescription="diapositiva" aria-label="Toma 4-3 en vídeo: la calma después de la pelea">
+    <figure class="stage">
+      <video src="assets/toma_4_3.mp4" playsinline preload="metadata" aria-label="Toma 4-3: la calma tras la pelea"></video>
+      <figcaption class="stage__caption">
+        <span class="stage__kicker">Toma 4-3</span>
+        <span class="stage__title">La calma después de la pelea</span>
+      </figcaption>
+    </figure>
+  </section>
+
+  <!-- 15 · TEXTO TOMA 5 (sin vídeo) -->
+  <section class="slide" aria-roledescription="diapositiva" aria-label="Narración de la toma 5">
+    <div class="scene scene--solo scene--dense">
+      <header class="head reveal" style="--i:0">
+        <p class="kicker">Tratado Quinto · Parte 5</p>
+        <h2 class="title">El sermón y el supuesto milagro</h2>
+        <div class="rule" style="margin-top:14px" aria-hidden="true"><span></span><i>✦</i><span></span></div>
+      </header>
+      <div class="copy reveal" style="--i:1">
+        <p class="narration">«Venida la mañana, mi amo se dirigió a la iglesia para predicar y despedir la bula. Mas los vecinos, que ya desconfiaban de ella, recordaban las acusaciones de la noche anterior. En medio del sermón entró el alguacil y declaró públicamente que las bulas eran falsas, confesando que había ayudado a mi amo esperando compartir las ganancias».</p>
+        <p class="narration">«Después de arrojar su vara al suelo, mi amo se arrodilló y pidió a Dios que mostrase la verdad mediante un milagro. Apenas acabó su oración, el alguacil cayó al suelo, dando voces, retorciéndose y echando espuma por la boca. Los presentes quedaron aterrados y suplicaron a mi amo que socorriese al desdichado».</p>
+        <p class="narration">«Entonces, el buldero bajó del púlpito y pidió a todos que rogasen por él. Tras una larga oración, le pusieron la bula sobre la cabeza y, poco a poco, el alguacil volvió en sí».</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- IMAGEN TOMA 5 (secuencia sin vídeo) -->
+  <section class="slide slide--video" aria-roledescription="diapositiva" aria-label="Toma 5: el sermón y el supuesto milagro, imagen">
+    <figure class="stage stage--image">
+      <img src="assets/toma_5.jpg" alt="El buldero muestra la bula en la iglesia mientras el alguacil, en el suelo, se retuerce ante los vecinos">
+      <figcaption class="stage__caption">
+        <span class="stage__kicker">Toma 5</span>
+        <span class="stage__title">El sermón y el supuesto milagro</span>
+      </figcaption>
+    </figure>
+  </section>
+
+  <!-- 16 · TEXTO TOMA 6-1 -->
+  <section class="slide" aria-roledescription="diapositiva" aria-label="Narración de la toma 6-1">
+    <div class="scene scene--solo">
+      <header class="head reveal" style="--i:0">
+        <p class="kicker">Tratado Quinto · Parte 6-1</p>
+        <h2 class="title">El arrepentimiento del alguacil</h2>
+        <div class="rule" style="margin-top:14px" aria-hidden="true"><span></span><i>✦</i><span></span></div>
+      </header>
+      <div class="copy reveal" style="--i:1">
+        <p class="narration">«Cuando recuperó el juicio, el alguacil se arrojó a los pies de mi amo y le pidió perdón. Confesó que había hablado por boca y mandato del demonio, tanto por vengarse de él como porque el demonio recibía gran pena del bien que se hacía al tomar aquella bula. Mi amo lo perdonó y ambos hicieron las paces».</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 17 · VÍDEO TOMA 6-1 -->
+  <section class="slide slide--video" aria-roledescription="diapositiva" aria-label="Toma 6-1 en vídeo: el arrepentimiento del alguacil">
+    <figure class="stage">
+      <video src="assets/toma_6_1.mp4" playsinline preload="metadata" aria-label="Toma 6-1: el alguacil pide perdón"></video>
+      <figcaption class="stage__caption">
+        <span class="stage__kicker">Toma 6-1</span>
+        <span class="stage__title">El arrepentimiento del alguacil</span>
+      </figcaption>
+    </figure>
+  </section>
+
+  <!-- 18 · TEXTO TOMA 6-2 -->
+  <section class="slide" aria-roledescription="diapositiva" aria-label="Narración de la toma 6-2">
+    <div class="scene scene--solo">
+      <header class="head reveal" style="--i:0">
+        <p class="kicker">Tratado Quinto · Parte 6-2</p>
+        <h2 class="title">La venta de las bulas</h2>
+        <div class="rule" style="margin-top:14px" aria-hidden="true"><span></span><i>✦</i><span></span></div>
+      </header>
+      <div class="copy reveal" style="--i:1">
+        <p class="narration">«Después de lo sucedido, todos creyeron haber presenciado un verdadero milagro. Tanto fue el temor y la devoción que despertó aquel acontecimiento, que casi no quedó persona en el lugar que no tomase una bula: hombres y mujeres, muchachos y muchachas».</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 19 · VÍDEO TOMA 6-2 -->
+  <section class="slide slide--video" aria-roledescription="diapositiva" aria-label="Toma 6-2 en vídeo: la venta de las bulas">
+    <figure class="stage">
+      <video src="assets/toma_6_2.mp4" playsinline preload="metadata" aria-label="Toma 6-2: los vecinos compran las bulas"></video>
+      <figcaption class="stage__caption">
+        <span class="stage__kicker">Toma 6-2</span>
+        <span class="stage__title">La venta de las bulas</span>
+      </figcaption>
+    </figure>
+  </section>
+
+  <!-- 20 · TEXTO TOMA 7-1 -->
+  <section class="slide" aria-roledescription="diapositiva" aria-label="Narración de la toma 7-1">
+    <div class="scene scene--solo">
+      <header class="head reveal" style="--i:0">
+        <p class="kicker">Tratado Quinto · Parte 7-1</p>
+        <h2 class="title">Lázaro descubre el engaño</h2>
+        <div class="rule" style="margin-top:14px" aria-hidden="true"><span></span><i>✦</i><span></span></div>
+      </header>
+      <div class="copy reveal" style="--i:1">
+        <p class="narration">«La noticia se extendió por los pueblos vecinos, donde la gente acudía a comprar las bulas sin necesidad de sermón alguno. Yo mismo quedé espantado al principio y creí que todo había sucedido como lo vi. Pero, al observar después las risas y burlas que mi amo y el alguacil se hacían entre sí, comprendí que todo había sido preparado por la astucia de mi amo».</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 21 · VÍDEO TOMA 7-1 -->
+  <section class="slide slide--video" aria-roledescription="diapositiva" aria-label="Toma 7-1 en vídeo: Lázaro descubre el engaño">
+    <figure class="stage">
+      <video src="assets/toma_7-1.mp4" playsinline preload="metadata" aria-label="Toma 7-1: Lázaro comprende el engaño"></video>
+      <figcaption class="stage__caption">
+        <span class="stage__kicker">Toma 7-1</span>
+        <span class="stage__title">Lázaro descubre el engaño</span>
+      </figcaption>
+    </figure>
+  </section>
+
+  <!-- 22 · TEXTO TOMA 7-2 -->
+  <section class="slide" aria-roledescription="diapositiva" aria-label="Narración de la toma 7-2">
+    <div class="scene scene--solo">
+      <header class="head reveal" style="--i:0">
+        <p class="kicker">Tratado Quinto · Parte 7-2</p>
+        <h2 class="title">La última conversación entre Lázaro y el buldero</h2>
+        <div class="rule" style="margin-top:14px" aria-hidden="true"><span></span><i>✦</i><span></span></div>
+      </header>
+      <div class="copy reveal" style="--i:1">
+        <p class="narration">«Y, aunque era muchacho, me maravilló aquella invención, y pensé para mis adentros cuántos engaños semejantes harían aquellos burladores entre la gente inocente. Finalmente, permanecí con este quinto amo cerca de cuatro meses, durante los cuales también pasé muchas fatigas».</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 23 · VÍDEO TOMA 7-2 -->
+  <section class="slide slide--video" aria-roledescription="diapositiva" aria-label="Toma 7-2 en vídeo: la última conversación entre Lázaro y el buldero">
+    <figure class="stage">
+      <video src="assets/toma_7-2.mp4" playsinline preload="metadata" aria-label="Toma 7-2: Lázaro y el buldero"></video>
+      <figcaption class="stage__caption">
+        <span class="stage__kicker">Toma 7-2</span>
+        <span class="stage__title">La última conversación entre Lázaro y el buldero</span>
+      </figcaption>
+    </figure>
+  </section>
+
+  <!-- 24 · CIERRE -->
+  <section class="slide slide--end" aria-roledescription="diapositiva" aria-label="Fin de la presentación">
+    <div class="end__layout">
+      <div class="end__credit reveal" style="--i:5">
+        <p class="end__credit-eyebrow">Presentado por</p>
+        <p class="end__credit-name">Anderson Correa</p>
+        <p class="end__credit-line">Profa. Alejandra Cañete</p>
+        <p class="end__credit-line">Literatura 4-1 · Plan 1994</p>
+        <p class="end__credit-line">Liceo 45 Víctor Bersanelli</p>
+        <p class="end__credit-date">27 de octubre del 2026</p>
+      </div>
+      <div class="scene scene--solo">
+        <p class="cover__eyebrow reveal" style="--i:0">Lazarillo de Tormes · Tratado V</p>
+        <h2 class="end__title reveal" style="--i:1">Fin</h2>
+        <div class="rule reveal" style="--i:2" aria-hidden="true"><span></span><i>✦</i><span></span></div>
+        <p class="end__text reveal" style="--i:3">Aquí termina el relato del <strong>buldero</strong>, quinto amo de Lázaro.</p>
+        <div class="reveal end__actions" style="--i:4">
+          <button class="btn btn--gold" id="restartBtn">Volver al inicio</button>
+          <a class="btn" href="https://yeikod.github.io/Portfolio/" target="_blank" rel="noopener noreferrer" aria-label="Ver otros proyectos de Anderson Correa en una pestaña nueva">
+            Otros proyectos
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="dock">
+  <p class="hint">Navega con <kbd><svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg></kbd><kbd><svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></kbd> <span aria-hidden="true">·</span> <kbd>F</kbd> pantalla completa</p>
+  <nav class="dots" id="dots" aria-label="Índice de diapositivas"></nav>
+  <div class="dock__nav">
+    <span class="counter" aria-hidden="true"><b id="num">01</b><span>/</span><span id="total">24</span></span>
+    <button class="navbtn" id="prevBtn" aria-label="Diapositiva anterior" title="Anterior (←)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+    </button>
+    <button class="navbtn" id="nextBtn" aria-label="Diapositiva siguiente" title="Siguiente (→)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+    </button>
+  </div>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+
+  var deck = document.getElementById('deck');
+  var slides = Array.prototype.slice.call(deck.querySelectorAll('.slide'));
+  var videos = Array.prototype.slice.call(deck.querySelectorAll('video'));
+  var total = slides.length;
+  var index = 0;
+
+  var fill = document.getElementById('progressFill');
+  var num = document.getElementById('num');
+  var totalEl = document.getElementById('total');
+  var dotsWrap = document.getElementById('dots');
+  var prevBtn = document.getElementById('prevBtn');
+  var nextBtn = document.getElementById('nextBtn');
+  var brandBtn = document.getElementById('brandBtn');
+  var restartBtn = document.getElementById('restartBtn');
+
+  totalEl.textContent = String(total).padStart(2, '0');
+
+  function slideTitle(slide) {
+    var heading = slide.querySelector('.stage__title, .title, .cover__title, .end__title');
+    return heading ? heading.textContent.trim() : 'Diapositiva';
+  }
+
+  /* ---------- construir índice de puntos ---------- */
+  var dots = slides.map(function (slide, i) {
+    var dot = document.createElement('button');
+    dot.className = 'dot' + (i === 0 ? ' is-active' : '');
+    dot.type = 'button';
+    dot.setAttribute('aria-label', (i + 1) + ' de ' + total + ': ' + slideTitle(slide));
+    dot.title = (i + 1) + '. ' + slideTitle(slide);
+    dot.addEventListener('click', function () { goTo(i); });
+    dotsWrap.appendChild(dot);
+    return dot;
+  });
+
+  /* ---------- reproducción de vídeo (siempre con sonido) ---------- */
+  var audioBlocked = false;
+
+  function armAudioUnlock() {
+    if (audioBlocked) return;
+    audioBlocked = true;
+    var events = ['pointerdown', 'keydown', 'touchstart'];
+    var handler = function () {
+      events.forEach(function (name) { document.removeEventListener(name, handler); });
+      audioBlocked = false;
+      videos.forEach(function (video) { video.muted = false; });
+      slides[index].querySelectorAll('video').forEach(function (video) {
+        if (video.paused) playVideo(video);
+      });
+    };
+    events.forEach(function (name) { document.addEventListener(name, handler); });
+  }
+
+  function playVideo(video) {
+    video.muted = false;
+    var promise = video.play();
+    if (promise && typeof promise.catch === 'function') {
+      promise.catch(function () { armAudioUnlock(); });
+    }
+  }
+
+  function pauseAllVideos() {
+    videos.forEach(function (video) { video.pause(); });
+  }
+
+  /* ---------- actualizar interfaz ---------- */
+  function updateUI() {
+    document.body.classList.toggle('is-cover', index === 0);
+    num.textContent = String(index + 1).padStart(2, '0');
+    fill.style.width = (((index + 1) / total) * 100) + '%';
+    dots.forEach(function (dot, i) {
+      dot.classList.toggle('is-active', i === index);
+      if (i === index) {
+        dot.setAttribute('aria-current', 'true');
+      } else {
+        dot.removeAttribute('aria-current');
+      }
+    });
+    prevBtn.disabled = index === 0;
+    nextBtn.disabled = index === total - 1;
+  }
+
+  /* ---------- navegación con desvanecimiento ---------- */
+  function goTo(target) {
+    target = Math.max(0, Math.min(total - 1, target));
+    if (target === index) return;
+
+    var outgoing = slides[index];
+    var incoming = slides[target];
+
+    outgoing.classList.remove('is-active');
+    outgoing.setAttribute('aria-hidden', 'true');
+
+    /* dejamos que el vídeo siga un instante durante el fundido */
+    outgoing.querySelectorAll('video').forEach(function (video) {
+      window.setTimeout(function () {
+        if (!outgoing.classList.contains('is-active')) video.pause();
+      }, 850);
+    });
+
+    index = target;
+
+    incoming.scrollTop = 0;
+    incoming.classList.add('is-active');
+    incoming.removeAttribute('aria-hidden');
+    incoming.querySelectorAll('video').forEach(function (video) {
+      try { video.currentTime = 0; } catch (e) {}
+      video.muted = false;
+      playVideo(video);
+    });
+
+    updateUI();
+
+    try {
+      if (history.replaceState) history.replaceState(null, '', '#' + (index + 1));
+    } catch (e) {}
+  }
+
+  function next() { if (index < total - 1) goTo(index + 1); }
+  function prev() { if (index > 0) goTo(index - 1); }
+
+  /* ---------- pantalla completa ---------- */
+  function toggleFullscreen() {
+    if (!document.fullscreenElement) {
+      var request = document.documentElement.requestFullscreen || document.documentElement.webkitRequestFullscreen;
+      if (request) {
+        var result = request.call(document.documentElement);
+        if (result && result.catch) result.catch(function () {});
+      }
+    } else {
+      var exit = document.exitFullscreen || document.webkitExitFullscreen;
+      if (exit) exit.call(document);
+    }
+  }
+
+  /* ---------- eventos ---------- */
+  prevBtn.addEventListener('click', prev);
+  nextBtn.addEventListener('click', next);
+  brandBtn.addEventListener('click', function () { goTo(0); });
+  if (restartBtn) restartBtn.addEventListener('click', function () { goTo(0); });
+
+  /* al terminar una toma, la presentación avanza sola */
+  videos.forEach(function (video) {
+    video.addEventListener('ended', function () {
+      var slide = video.parentNode;
+      while (slide && slide.classList && !slide.classList.contains('slide')) slide = slide.parentNode;
+      if (slide === slides[index]) next();
+    });
+  });
+
+  document.addEventListener('keydown', function (event) {
+    if (event.altKey || event.ctrlKey || event.metaKey) return;
+
+    var target = event.target;
+    var tag = target && target.tagName ? target.tagName.toLowerCase() : '';
+    if ((event.key === ' ' || event.key === 'Spacebar' || event.key === 'Enter') && (tag === 'button' || tag === 'a')) return;
+
+    switch (event.key) {
+      case 'ArrowRight':
+      case 'ArrowDown':
+      case 'PageDown':
+      case ' ':
+      case 'Spacebar':
+      case 'Enter':
+        event.preventDefault();
+        next();
+        break;
+      case 'ArrowLeft':
+      case 'ArrowUp':
+      case 'PageUp':
+        event.preventDefault();
+        prev();
+        break;
+      case 'Home':
+        event.preventDefault();
+        goTo(0);
+        break;
+      case 'End':
+        event.preventDefault();
+        goTo(total - 1);
+        break;
+      case 'f':
+      case 'F':
+        event.preventDefault();
+        toggleFullscreen();
+        break;
+      default:
+        break;
+    }
+  });
+
+  /* ---------- gestos táctiles ---------- */
+  var touchX = 0, touchY = 0, tracking = false;
+
+  document.addEventListener('touchstart', function (event) {
+    if (event.touches.length !== 1) return;
+    touchX = event.touches[0].clientX;
+    touchY = event.touches[0].clientY;
+    tracking = true;
+  }, { passive: true });
+
+  document.addEventListener('touchend', function (event) {
+    if (!tracking) return;
+    tracking = false;
+    var dx = event.changedTouches[0].clientX - touchX;
+    var dy = event.changedTouches[0].clientY - touchY;
+    if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.4) {
+      if (dx < 0) next(); else prev();
+    }
+  }, { passive: true });
+
+  /* ---------- pausar al ocultar la pestaña ---------- */
+  document.addEventListener('visibilitychange', function () {
+    if (document.hidden) {
+      pauseAllVideos();
+    } else {
+      slides[index].querySelectorAll('video').forEach(function (video) {
+        if (video.paused) playVideo(video);
+      });
+    }
+  });
+
+  /* ---------- arranque (admite enlaces #3, #7…) ---------- */
+  function init() {
+    var fromHash = parseInt((location.hash || '').replace('#', ''), 10);
+    if (fromHash >= 1 && fromHash <= total && fromHash - 1 !== 0) {
+      slides[0].classList.remove('is-active');
+      slides[0].setAttribute('aria-hidden', 'true');
+      index = fromHash - 1;
+      slides[index].classList.add('is-active');
+      slides[index].removeAttribute('aria-hidden');
+      slides[index].querySelectorAll('video').forEach(function (video) {
+        video.muted = false;
+        playVideo(video);
+      });
+    }
+    updateUI();
+  }
+
+  init();
+})();
+</script>
+</body>
+</html>
