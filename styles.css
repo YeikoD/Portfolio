@@ -385,6 +385,18 @@ body {
     letter-spacing: -0.5px;
     color: #e2e8f0;
     min-height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-wrap: balance;
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.hero-content h2.is-fading {
+    opacity: 0;
+    transform: translateY(8px);
 }
 
 .hero-buttons {

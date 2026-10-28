@@ -164,47 +164,33 @@ const updateActiveNav = throttle(() => {
 
 window.addEventListener('scroll', updateActiveNav, { passive: true });
 
-// Typing effect for hero section (alternating loop)
+// Fade effect for hero section (alternating loop)
 const heroText = document.querySelector('.hero-content h2');
 if (heroText) {
     const phrases = [
-        "Desarrollador de software enfocado en crear sistemas de gestión livianos y eficientes.",
-        "Autodidacta apasionado por resolver problemas reales a través del código.",
-        "Dedicado a la automatización de procesos y optimización de rendimiento."
+        "Sistemas de gestión livianos, sin dependencias pesadas.",
+        "Interfaces web dentro de aplicaciones nativas.",
+        "Automatización de procesos y tareas repetitivas."
     ];
+    const holdTime = 4000; // time the phrase stays fully visible
+    const fadeTime = 600;  // must match the CSS transition duration
     let phraseIndex = 0;
-    let charIndex = 0;
-    let isDeleting = false;
-    const delay = 3500; // time fully typed
 
-    heroText.textContent = '';
+    heroText.textContent = phrases[phraseIndex];
 
-    function typeHero() {
-        const currentPhrase = phrases[phraseIndex];
-        
-        if (isDeleting) {
-            heroText.textContent = currentPhrase.substring(0, charIndex - 1);
-            charIndex--;
-        } else {
-            heroText.textContent = currentPhrase.substring(0, charIndex + 1);
-            charIndex++;
-        }
+    function fadeHero() {
+        heroText.classList.add('is-fading');
 
-        let typingSpeed = isDeleting ? 20 : 40; // faster typing speed since sentences are longer
-
-        if (!isDeleting && charIndex === currentPhrase.length) {
-            typingSpeed = delay;
-            isDeleting = true;
-        } else if (isDeleting && charIndex === 0) {
-            isDeleting = false;
+        setTimeout(() => {
             phraseIndex = (phraseIndex + 1) % phrases.length;
-            typingSpeed = 500;
-        }
+            heroText.textContent = phrases[phraseIndex];
+            heroText.classList.remove('is-fading');
 
-        setTimeout(typeHero, typingSpeed);
+            setTimeout(fadeHero, holdTime);
+        }, fadeTime);
     }
 
-    setTimeout(typeHero, 600);
+    setTimeout(fadeHero, holdTime);
 }
 
 // Loading animation optimized

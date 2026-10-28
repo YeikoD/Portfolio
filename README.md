@@ -7,7 +7,7 @@ Portafolio web profesional diseñado para showcase de proyectos de desarrollo de
 ## 🌟 Características
 
 - **Diseño Tech-Modern**: Tema oscuro con acentos cyan para estética profesional
-- **Efectos Visuales Avanzados**: Glow effects, parallax, typing animations y transiciones suaves
+- **Efectos Visuales Avanzados**: Glow effects, parallax, fundido de frases y transiciones suaves
 - **Proyecto Estrella Destacado**: Sección especial para el proyecto más importante (LogSys)
 - **Demo Integrada**: Videos demostrativos de proyectos con reproductores HTML5
 - **Enlace Directo a GitHub**: Acceso rápido a repositorios y proyectos
@@ -85,7 +85,7 @@ Portfolio/
 ## 🎯 Secciones del Portafolio
 
 ### 1. Hero Section
-- **Presentación dinámica**: Efecto typing con múltiples frases
+- **Presentación dinámica**: Frases cortas con animación de fundido
 - **Mapa de Uruguay**: SVG interactivo con parallax y glowing effects
 - **Glow effect**: Seguimiento del mouse con física suave
 - **Call-to-action**: Botones para ver proyectos y contacto
@@ -121,7 +121,7 @@ El portafolio está optimizado para todas las resoluciones:
 - **Efectos Visuales**:
   - Glow effects con seguimiento de mouse
   - Parallax en mapa de Uruguay
-  - Animaciones typing en hero y logo
+  - Fundido de frases en el hero y typing en el logo
   - Transiciones suaves en hover
   - Pulsing nodes en el mapa
 - **Performance**:
@@ -157,14 +157,15 @@ vercel deploy
 
 ### Animaciones en JavaScript
 El archivo `script.js` incluye:
-- **Typing effects**: Para hero section y logo
+- **Fade effect**: Para las frases del hero
+- **Typing effect**: Para el logo
 - **Parallax glow**: Seguimiento de mouse con física
 - **Mobile menu**: Toggle animado con ARIA
 - **Smooth scroll**: Navegación fluida
 - **Intersection Observer**: Animaciones al scroll
 - **Performance utilities**: Throttle y debounce
 
-Personaliza las frases del typing effect y los colores en las variables CSS según tu preferencia.
+Personaliza las frases del hero y los colores en las variables CSS según tu preferencia.
 
 ### Variables CSS Personalizables
 ```css
