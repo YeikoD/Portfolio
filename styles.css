@@ -801,6 +801,15 @@ body {
     display: block;
 }
 
+.video-wrapper iframe {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: 8px;
+    border: none;
+    display: block;
+    background: #0a0806;
+}
+
 .video-content {
     text-align: center;
     color: white;
