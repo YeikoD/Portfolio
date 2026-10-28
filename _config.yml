@@ -1,0 +1,7 @@
+# Configuración de GitHub Pages para Portfolio
+permalink: pretty
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: null
